@@ -1,7 +1,7 @@
-package kinetiqa.bio
+package bio.kinetiqa
 
 import io.ktor.server.application.*
-import kinetiqa.bio.plugins.*
+import bio.kinetiqa.plugins.*
 
 fun main(args: Array<String>): Unit =
 	io.ktor.server.netty.EngineMain.main(args)
@@ -10,4 +10,5 @@ fun main(args: Array<String>): Unit =
 fun Application.module() {
 	configureRouting()
 	configureSerialization()
+	configureHTTP()
 }

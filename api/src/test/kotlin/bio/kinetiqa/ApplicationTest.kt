@@ -1,9 +1,7 @@
-package kinetiqa.bio
+package bio.kinetiqa
 
 import io.ktor.server.routing.*
 import io.ktor.http.*
-import io.ktor.server.locations.*
-import io.ktor.server.http.content.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.plugins.*
 import io.ktor.server.application.*
@@ -13,7 +11,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import kotlin.test.*
 import io.ktor.server.testing.*
-import kinetiqa.bio.plugins.*
+import bio.kinetiqa.plugins.*
 
 class ApplicationTest {
 	@Test
