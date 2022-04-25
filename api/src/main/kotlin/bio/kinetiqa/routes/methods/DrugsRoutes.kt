@@ -3,16 +3,16 @@ package bio.kinetiqa.routes.methods
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.util.*
-import bio.kinetiqa.core.http.Functions
+import bio.kinetiqa.core.utils.Params
 
 fun Route.drugsRouting() {
 	route("/method/drugs.list") {
 		get {
-			Functions.paramsReduce(call.request.queryParameters.toMap());
+			Params.get(call);
 		}
 
 		post {
-			call.parameters
+			Params.post(call);
 		}
 	}
 }

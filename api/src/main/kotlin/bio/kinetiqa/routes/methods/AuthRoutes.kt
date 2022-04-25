@@ -2,7 +2,7 @@ package bio.kinetiqa.routes.methods
 
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
-import bio.kinetiqa.core.http.Functions
+import bio.kinetiqa.core.utils.Params
 
 fun Route.authRouting() {
 	route("/sign.up") {
