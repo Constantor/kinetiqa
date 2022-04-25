@@ -7,13 +7,13 @@ import bio.kinetiqa.core.utils.Params
 fun Route.authRouting() {
 	route("/sign.up") {
 		post {
-			val get: Map<String, String> = getParams(call)
+			val get: Map<String, String> = Params.get(call)
 		}
 	}
 
 	route("/sign.in") {
 		post {
-			val post: Map<String, String> = postParams(call)
+			val post: Map<String, String> = Params.post(call)
 		}
 	}
 }

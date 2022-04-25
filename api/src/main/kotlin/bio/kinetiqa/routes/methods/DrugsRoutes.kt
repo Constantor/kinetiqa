@@ -8,11 +8,11 @@ import bio.kinetiqa.core.utils.Params
 fun Route.drugsRouting() {
 	route("/method/drugs.list") {
 		get {
-			Params.get(call);
+			val get: Map<String, String> = Params.get(call)
 		}
 
 		post {
-			Params.post(call);
+			val post: Map<String, String> = Params.post(call)
 		}
 	}
 }
