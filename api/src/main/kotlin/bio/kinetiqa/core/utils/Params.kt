@@ -7,16 +7,20 @@ import io.ktor.util.*
 
 class Params {
 	companion object {
-		private fun reduce(params: Map<String, List<String>>): Map<String, String> {
+		fun reduce(params: Map<String, List<String>>): Map<String, String> {
 			return params.mapValues { it.value[0] }
 		}
 
-		private fun reduce(params: Parameters): Map<String, String> {
+		fun reduce(params: Parameters): Map<String, String> {
 			return reduce(params.toMap())
 		}
 
 		fun get(call: ApplicationCall): Map<String, String> {
 			return reduce(call.request.queryParameters)
+		}
+
+		suspend fun post(call: ApplicationCall): Map<String, String> {
+			return if (call.receiveText().isEmpty()) HashMap() else reduce(call.receiveParameters());
 		}
 	}
 }
