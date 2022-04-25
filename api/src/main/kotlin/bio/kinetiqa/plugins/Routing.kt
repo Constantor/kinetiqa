@@ -4,7 +4,6 @@ import io.ktor.server.routing.*
 import io.ktor.server.application.*
 import bio.kinetiqa.routes.methods.*
 import io.ktor.http.*
-import io.ktor.server.request.*
 import io.ktor.server.response.*
 
 fun Application.configureRouting() {
@@ -12,6 +11,11 @@ fun Application.configureRouting() {
 		route("/method") {
 			authRouting()
 			drugsRouting()
+			route("/method/{...}") {
+				handle {
+					call.respond(HttpStatusCode.NotFound)
+				}
+			}
 		}
 
 		route("/{...}") {
