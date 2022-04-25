@@ -7,11 +7,11 @@ import io.ktor.util.*
 
 class Params {
 	companion object {
-		fun reduce(params: Map<String, List<String>>): Map<String, String> {
+		private fun reduce(params: Map<String, List<String>>): Map<String, String> {
 			return params.mapValues { it.value[0] }
 		}
 
-		fun reduce(params: Parameters): Map<String, String> {
+		private fun reduce(params: Parameters): Map<String, String> {
 			return reduce(params.toMap())
 		}
 
