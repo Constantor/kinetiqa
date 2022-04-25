@@ -18,9 +18,5 @@ class Params {
 		fun get(call: ApplicationCall): Map<String, String> {
 			return reduce(call.request.queryParameters)
 		}
-
-		suspend fun post(call: ApplicationCall): Map<String, String> {
-			return reduce(call.receiveParameters())
-		}
 	}
 }

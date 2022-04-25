@@ -10,9 +10,5 @@ fun Route.drugsRouting() {
 		get {
 			val get: Map<String, String> = Params.get(call)
 		}
-
-		post {
-			val post: Map<String, String> = Params.post(call)
-		}
 	}
 }
