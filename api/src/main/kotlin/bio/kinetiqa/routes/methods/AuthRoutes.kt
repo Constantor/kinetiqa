@@ -6,26 +6,19 @@ import bio.kinetiqa.core.utils.Params
 import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
-import java.util.StringJoiner
-import kotlin.system.exitProcess
 
 fun Route.authRouting() {
 	route("/sign.up") {
 		get {
 			val get: Map<String, String> = Params.get(call)
-			call.respond(HttpStatusCode.OK, "Get sign up ${get.toString()}\n")
+			call.respond(HttpStatusCode.OK, "Sign up")
 		}
 	}
 
 	route("/sign.in") {
 		get {
 			val get: Map<String, String> = Params.get(call)
-			call.respond(HttpStatusCode.OK, "Get sign in ${get.toString()}\n")
-		}
-
-		post {
-			val get: Map<String, String> = Params.get(call)
-			val postBody: String = call.receiveText()
+			call.respond(HttpStatusCode.OK, "Sign in")
 		}
 	}
 }
