@@ -20,7 +20,7 @@ class Params {
 		}
 
 		suspend fun post(call: ApplicationCall): Map<String, String> {
-			return if (call.receiveText().isEmpty()) HashMap() else reduce(call.receiveParameters());
+			return if(call.receiveText().isEmpty()) HashMap() else reduce(call.receiveParameters());
 		}
 	}
 }

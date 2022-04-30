@@ -2,7 +2,7 @@ package bio.kinetiqa
 
 import io.ktor.server.routing.*
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
+import io.ktor.shared.serialization.kotlinx.kotlinx.json.*
 import io.ktor.server.plugins.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
@@ -12,6 +12,7 @@ import io.ktor.client.statement.*
 import kotlin.test.*
 import io.ktor.server.testing.*
 import bio.kinetiqa.plugins.*
+import io.ktor.client.call.body
 
 class ApplicationTest {
 	@Test
