@@ -1,5 +1,6 @@
 package bio.kinetiqa
 
+import bio.kinetiqa.core.DatabaseFactory
 import io.ktor.server.application.*
 import bio.kinetiqa.plugins.*
 
@@ -12,4 +13,6 @@ fun Application.module() {
 	configureSerialization()
 	configureHTTP()
 	configureDoubleReceive()
+
+	DatabaseFactory.init()
 }
