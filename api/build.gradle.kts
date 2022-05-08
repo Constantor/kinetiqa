@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.jib as jib
+
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
@@ -8,10 +10,17 @@ plugins {
 	application
 	kotlin("jvm") version "1.6.21"
 	id("org.jetbrains.kotlin.plugin.serialization") version "1.6.21"
+	id("com.google.cloud.tools.jib") version "3.1.4"
 }
 
 group = "bio.kinetiqa"
 version = "0.0.1"
+
+jib {
+	from.image = "openjdk:16"
+	to.image = "kinetiqa-server"
+}
+
 application {
 	mainClass.set("io.ktor.server.netty.EngineMain")
 
