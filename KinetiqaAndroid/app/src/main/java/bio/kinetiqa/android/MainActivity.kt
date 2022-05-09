@@ -1,5 +1,6 @@
 package bio.kinetiqa.android
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.AdapterView.OnItemClickListener
@@ -7,11 +8,13 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import bio.kinetiqa.android.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 	private lateinit var binding: ActivityMainBinding
 	var substances : MutableList<Substance> = ArrayList()
 	lateinit var subList : ListView
+	private lateinit var appBarConfiguration: AppBarConfiguration
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -31,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 		val navController = findNavController(R.id.nav_host_fragment_activity_main)
 		// Passing each menu ID as a set of Ids because each
 		// menu should be considered as top level destinations.
-		val appBarConfiguration = AppBarConfiguration(
+		var appBarConfiguration = AppBarConfiguration(
 			setOf(
 				R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
 			)
@@ -39,29 +43,20 @@ class MainActivity : AppCompatActivity() {
 		setupActionBarWithNavController(navController, appBarConfiguration)
 		navView.setupWithNavController(navController)
 
-		// some unfinished sheet
+		// Not working sheet
 
-/*		setContentView(R.layout.fragment_dashboard)
+		val host: NavHostFragment = supportFragmentManager
+			.findFragmentById(R.id.navFragment) as NavHostFragment? ?: return
+		val navLeftController = host.navController
 
-	    setSubstData()// TODO: хардкод
-		subList = findViewById(R.id.subList)
-		if (subList == null) { Log.e("sublist", "sublist is null")}
-		val substAdapter = SubstanceAdapter(this, R.layout.list_item, substances)
-		subList.adapter = substAdapter*/
+		val sideBar = findViewById<NavigationView>(R.id.nav_left_view)
+		sideBar?.setupWithNavController(navLeftController)
 
-/*		val itemListener =
-			OnItemClickListener { parent, v, position, id -> // получаем выбранный пункт
-				val selectedState: Substance = parent.getItemAtPosition(position) as Substance
-				Toast.makeText(
-					applicationContext, "Был выбран пункт " + selectedState.name,
-					Toast.LENGTH_SHORT
-				).show()
-			}
 
-		subList.setOnItemClickListener(itemListener)*/
-	}
-
-	fun setSubstData() {
-		substances.add(Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo))
+/*		appBarConfiguration = AppBarConfiguration(navController.graph
+			, drawerLayout = drawer_layout) // для бокового меню
+		val toolBar = findViewById<Toolbar>(R.id.toolbar)
+		setSupportActionBar(toolBar) // для верхнего меню
+		toolBar.setupWithNavController(navController, appBarConfiguration)*/
 	}
 }
