@@ -2,21 +2,20 @@ package bio.kinetiqa.android.ui.dashboard
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Button
 import android.widget.ListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
-import bio.kinetiqa.android.MainActivity
-import bio.kinetiqa.android.R
-import bio.kinetiqa.android.Substance
-import bio.kinetiqa.android.SubstanceAdapter
+import bio.kinetiqa.android.*
 import bio.kinetiqa.android.databinding.FragmentDashboardBinding
 
 
@@ -31,6 +30,7 @@ class DashboardFragment : Fragment() {
 
 	var substances : MutableList<Substance> = ArrayList()
 	lateinit var subList : ListView
+	lateinit var add_substance : Button
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -63,6 +63,9 @@ class DashboardFragment : Fragment() {
 		subList.setOnItemClickListener(itemListener)
 		///
 
+		add_substance = root.findViewById(R.id.button_add_substance)
+		//add_substance.setOnClickListener();
+
 		return root
 	}
 
@@ -71,9 +74,7 @@ class DashboardFragment : Fragment() {
 		_binding = null
 	}
 
-
 	fun setSubstData() {
-		substances.add(Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo))
 		substances.add(Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo))
 		substances.add(Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo))
 		substances.add(Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo))

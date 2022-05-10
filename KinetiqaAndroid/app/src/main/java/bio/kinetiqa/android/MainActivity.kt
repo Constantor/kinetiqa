@@ -1,8 +1,10 @@
 package bio.kinetiqa.android
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.Toast
@@ -58,5 +60,10 @@ class MainActivity : AppCompatActivity() {
 		val toolBar = findViewById<Toolbar>(R.id.toolbar)
 		setSupportActionBar(toolBar) // для верхнего меню
 		toolBar.setupWithNavController(navController, appBarConfiguration)*/
+	}
+
+	fun addSubstance(view: View) {
+		val subIntent = Intent(this, AddSubActivity::class.java)
+		startActivity(subIntent)
 	}
 }
