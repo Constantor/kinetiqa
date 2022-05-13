@@ -15,4 +15,4 @@ COPY --from=build /home/gradle/src/build/libs/*.jar /app/ktor-docker-kinetiqa-ap
 ENTRYPOINT ["java", "-jar", "/app/ktor-docker-kinetiqa-api.jar"]
 
 # sudo docker build -t kinetiqa-api .
-# docker run --rm -d -p 127.0.0.1:80:8080/tcp kinetiqa-api
+# sudo docker run --rm -d -p 127.0.0.1:80:8080/tcp kinetiqa-api
