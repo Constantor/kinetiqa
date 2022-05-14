@@ -3,6 +3,7 @@ val kotlinVersion: String by project
 val logbackVersion: String by project
 val exposedVersion: String by project
 val postgresqlVersion: String by project
+val gsonVersion: String by project
 
 plugins {
 	application
@@ -27,8 +28,12 @@ repositories {
 
 dependencies {
 	implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
+	implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+
 	implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktorVersion")
+	implementation("io.ktor:ktor-serialization-gson:$ktorVersion")
+
 	implementation("io.ktor:ktor-server-compression-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
 	implementation("ch.qos.logback:logback-classic:$logbackVersion")
