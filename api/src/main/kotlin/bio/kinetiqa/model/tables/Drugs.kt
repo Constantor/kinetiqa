@@ -1,4 +1,4 @@
-package bio.kinetiqa.models
+package bio.kinetiqa.model.tables
 
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.Column
