@@ -6,10 +6,7 @@ import bio.kinetiqa.core.utils.Params
 import bio.kinetiqa.models.Drugs
 import io.ktor.http.*
 import io.ktor.server.response.*
-import org.jetbrains.exposed.sql.Query
-import org.jetbrains.exposed.sql.StdOutSqlLogger
-import org.jetbrains.exposed.sql.addLogger
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun Route.drugsRouting() {
@@ -17,13 +14,11 @@ fun Route.drugsRouting() {
 		get {
 			val get: Map<String, String> = Params.get(call)
 			//call.respond(HttpStatusCode.OK, "List\n${get}")
-			var outText: String = ""
-			transaction {
+			val outList = transaction {
 				addLogger(StdOutSqlLogger)
-				val query: Query = Drugs.selectAll()
-				outText = query.toList().toString()
+				Drugs.selectAll().toList()
 			}
-			call.respond(HttpStatusCode.OK, outText)
+			call.respond(HttpStatusCode.OK, outList.toString())
 		}
 	}
 }
