@@ -1,20 +1,22 @@
 package bio.kinetiqa.core
 
+import bio.kinetiqa.models.Drugs
 import kotlinx.coroutines.Dispatchers
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.slf4j.LoggerFactory
-import javax.sql.DataSource
 
-import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.SchemaUtils.create
-import org.jetbrains.exposed.sql.insert
 
 object DatabaseFactory {
-
 	fun init() {
-		Database.connect("jdbc:postgresql://apiuser:AVNS_TjDHRPxTKdDvbj4@kinetiqa-postgresql-db-do-user-2264611-0.b.db.ondigitalocean.com:25060/kinetiqa?sslmode=require", "org.postgresql.Driver")
-		println()
+		Database.connect("jdbc:postgresql://kinetiqa-postgresql-db-do-user-2264611-0.b.db.ondigitalocean.com:25060/kinetiqa", driver = "org.postgresql.Driver", user = "doadmin", password = "AVNS_Xwx137YDBXY3dXL") // ?sslmode=require
+		transaction {
+			addLogger(StdOutSqlLogger)
+			val query: Query = Drugs.selectAll()
+			println(query.toList())
+		}
 		/*Database.connect(hikari())
 		transaction {
 			create(Users)
