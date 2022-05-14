@@ -17,8 +17,8 @@ fun Route.drugsRouting() {
 		get {
 			val get: Map<String, String> = Params.get(call)
 			val out = transaction {
-				addLogger(StdOutSqlLogger)
-				Drugs.selectAll().map { mapOf(Drugs.id.name to it[Drugs.id], Drugs.label_name.name to it[Drugs.label_name]) }
+				// addLogger(StdOutSqlLogger)
+				Drugs.selectAll().map { Drug(it[Drugs.id], it[Drugs.label_name], it[Drugs.iupac], it[Drugs.description], it[Drugs.kinetics_plot], it[Drugs.photo_url], it[Drugs.standard_dosage_mg], it[Drugs.dosage_step_mg]) }
 			}
 			call.respond(HttpStatusCode.OK, out)
 		}
