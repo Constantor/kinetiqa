@@ -9,7 +9,6 @@ WORKDIR /home/gradle/src
 RUN gradle shadowJar --no-daemon
 
 FROM openjdk:18
-#EXPOSE 8080:80
 EXPOSE 8443:443
 RUN mkdir /app
 COPY ./kinetiqa.bio.jks /app/kinetiqa.bio.jks
@@ -17,4 +16,4 @@ COPY --from=build /home/gradle/src/build/libs/*.jar /app/ktor-docker-kinetiqa-ap
 ENTRYPOINT ["java", "-jar", "/app/ktor-docker-kinetiqa-api.jar"]
 
 # sudo docker build -t kinetiqa-api .
-# sudo docker run --rm -d -it -p 80:8080/tcp 443:8443/tcp kinetiqa-api
+# sudo docker run --rm -d -it -p 443:8443/tcp kinetiqa-api
