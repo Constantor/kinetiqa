@@ -18,7 +18,7 @@ fun Route.drugsRouting() {
 				addLogger(StdOutSqlLogger)
 				Drugs.selectAll().map { row -> Drug(row[Drugs.id], row[Drugs.labelName], row[Drugs.iupac], row[Drugs.description], row[Drugs.kineticsPlot], row[Drugs.photoURL], row[Drugs.standardDosageMG], row[Drugs.dosageStepMG]) }
 			}
-			call.respond(HttpStatusCode.OK, out)
+			call.respond(HttpStatusCode.OK, "${out}\n${System.getenv("DB_HOST").takeUnless { it.isNullOrEmpty() } ?: "kek"}")
 		}
 	}
 }
