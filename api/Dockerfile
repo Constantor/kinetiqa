@@ -9,7 +9,7 @@ WORKDIR /home/gradle/src
 RUN gradle shadowJar --no-daemon
 
 FROM openjdk:18
-EXPOSE 8080:80
+#EXPOSE 8080:80
 EXPOSE 8443:443
 RUN mkdir /app
 COPY ./kinetiqa.bio.jks /app/kinetiqa.bio.jks
