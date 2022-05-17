@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/routes"
+    app:startDestination="@id/settingsFragment">
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="bio.kinetiqa.android.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_leftProfile"
+            app:destination="@id/leftProfile" />
+        <action
+            android:id="@+id/action_settingsFragment_to_leftAbout"
+            app:destination="@id/leftAbout" />
+        <action
+            android:id="@+id/action_settingsFragment_to_leftSettings"
+            app:destination="@id/leftSettings" />
+    </fragment>
+    <fragment
+        android:id="@+id/leftAbout"
+        android:name="bio.kinetiqa.android.LeftAbout"
+        android:label="fragment_left_about"
+        tools:layout="@layout/fragment_left_about" />
+    <fragment
+        android:id="@+id/leftProfile"
+        android:name="bio.kinetiqa.android.LeftProfile"
+        android:label="fragment_left_profile"
+        tools:layout="@layout/fragment_left_profile" />
+    <fragment
+        android:id="@+id/leftSettings"
+        android:name="bio.kinetiqa.android.LeftSettings"
+        android:label="fragment_left_settings"
+        tools:layout="@layout/fragment_left_settings" />
+</navigation>
