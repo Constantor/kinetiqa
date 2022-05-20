@@ -1,7 +1,7 @@
 val ktorVersion: String by project
 val kotlinVersion: String by project
 val logbackVersion: String by project
-val exposedVersion: String by project
+val ktormVersion: String by project
 val postgresqlVersion: String by project
 val gsonVersion: String by project
 
@@ -40,9 +40,10 @@ dependencies {
 	implementation("io.ktor:ktor-server-double-receive:$ktorVersion")
 	testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
-	implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
-	implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
-	implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
-	implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
+
+	implementation("org.ktorm:ktorm-core:$ktormVersion")
+	implementation("org.ktorm:ktorm-global:$ktormVersion")
+	implementation("org.ktorm:ktorm-jackson:$ktormVersion")
+	implementation("org.ktorm:ktorm-support-postgresql:$ktormVersion")
 	implementation("org.postgresql:postgresql:$postgresqlVersion")
 }

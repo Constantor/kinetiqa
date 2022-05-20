@@ -1,23 +1,20 @@
 package bio.kinetiqa.routes.methods
 
+import bio.kinetiqa.core.DatabaseFactory.database
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import bio.kinetiqa.core.utils.Params
-import bio.kinetiqa.model.dataclasses.Drug
 import bio.kinetiqa.model.tables.Drugs
 import io.ktor.http.*
 import io.ktor.server.response.*
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.ktorm.dsl.from
+import org.ktorm.dsl.select
 
 fun Route.drugsRouting() {
 	route("/drugs.list") {
 		get {
 			val get: Map<String, String> = Params.get(call)
-			val out = transaction {
-				addLogger(StdOutSqlLogger)
-				Drugs.selectAll().map { row -> Drug(row[Drugs.id], row[Drugs.labelName], row[Drugs.iupac], row[Drugs.description], row[Drugs.kineticsPlot], row[Drugs.photoURL], row[Drugs.standardDosageMG], row[Drugs.dosageStepMG]) }
-			}
+			val out = database.from(Drugs).select()
 			call.respond(HttpStatusCode.OK, out)
 		}
 	}

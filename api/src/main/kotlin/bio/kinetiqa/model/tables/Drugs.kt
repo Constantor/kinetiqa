@@ -1,16 +1,15 @@
 package bio.kinetiqa.model.tables
 
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.Column
+import bio.kinetiqa.model.models.Drug
+import org.ktorm.schema.*
 
-object Drugs : Table() {
-	val id: Column<Int> = integer("id").autoIncrement()
-	val labelName: Column<String> = text("label_name").uniqueIndex()
-	val iupac: Column<String> = text("iupac")
-	val description: Column<String> = text("description")
-	val kineticsPlot: Column<String> = text("kinetics_plot")
-	val photoURL: Column<String> = text("photo_url")
-	val standardDosageMG: Column<Double> = double("standard_dosage_mg")
-	val dosageStepMG: Column<Double> = double("dosage_step_mg")
-	override val primaryKey = PrimaryKey(id, name = "id")
+object Drugs : Table<Drug>("drugs") {
+	val id = int("id").primaryKey().bindTo { it.id }
+	val labelName = varchar("label_name").bindTo { it.labelName }
+	val iupac = varchar("iupac").bindTo { it.iupac }
+	val description = varchar("description").bindTo { it.description }
+	val kineticsPlot = varchar("kinetics_plot").bindTo { it.kineticsPlot }
+	val photoURL = varchar("photo_url").bindTo { it.photoURL }
+	val standardDosageMG = double("standard_dosage_mg").bindTo { it.standardDosageMG }
+	val dosageStepMG = double("dosage_step_mg").bindTo { it.dosageStepMG }
 }
