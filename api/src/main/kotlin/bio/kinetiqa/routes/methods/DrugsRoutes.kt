@@ -9,12 +9,14 @@ import io.ktor.http.*
 import io.ktor.server.response.*
 import org.ktorm.dsl.from
 import org.ktorm.dsl.select
+import org.ktorm.entity.sequenceOf
+import org.ktorm.entity.toList
 
 fun Route.drugsRouting() {
 	route("/drugs.list") {
 		get {
 			val get: Map<String, String> = Params.get(call)
-			val out = database.from(Drugs).select()
+			val out = database.sequenceOf(Drugs).toList()
 			call.respond(HttpStatusCode.OK, out)
 		}
 	}
