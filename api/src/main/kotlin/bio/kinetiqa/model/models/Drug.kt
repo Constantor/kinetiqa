@@ -3,15 +3,17 @@ package bio.kinetiqa.model.models
 import org.ktorm.entity.Entity
 import kotlinx.serialization.*
 
-@Serializable
-abstract class Drug : Entity<Drug> {
+interface Drug : Entity<Drug> {
     companion object : Entity.Factory<Drug>()
-    abstract val id: Int
-    abstract val labelName: String
-    abstract val iupac: String
-    abstract val description: String
-    abstract val kineticsPlot: String
-    abstract val photoURL: String
-    abstract val standardDosageMG: Double
-    abstract val dosageStepMG: Double
+    val id: Int
+    val labelName: String
+    val iupac: String
+    val description: String
+    val kineticsPlot: String
+    val photoURL: String
+    val standardDosageMG: Double
+    val dosageStepMG: Double
 }
+
+@Serializable
+abstract class DrugImp : Drug
