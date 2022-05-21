@@ -3,7 +3,9 @@ package bio.kinetiqa.model.models
 import org.ktorm.entity.Entity
 import kotlinx.serialization.*
 
-interface Drug : Entity<Drug> {
+
+@Serializable
+sealed interface Drug : Entity<Drug> {
     companion object : Entity.Factory<Drug>()
     val id: Int
     val labelName: String
