@@ -14,6 +14,3 @@ interface Drug : Entity<Drug> {
     val standardDosageMG: Double
     val dosageStepMG: Double
 }
-
-@Serializable
-abstract class DrugImp : Drug
