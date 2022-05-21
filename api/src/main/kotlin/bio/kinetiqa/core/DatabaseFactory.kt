@@ -9,7 +9,7 @@ object DatabaseFactory {
 		val pass: String? = System.getenv("DB_PASS").takeUnless { it.isNullOrEmpty() }
 		if(user.isNullOrEmpty() || pass.isNullOrEmpty())
 			throw Exception("Missing DB auth credentials")
-		val host: String = System.getenv("DB_HOST").takeUnless { it.isNullOrEmpty() }
+		val host: String? = System.getenv("DB_HOST").takeUnless { it.isNullOrEmpty() }
 		if(host.isNullOrEmpty())
 			throw Exception("Missing DB host")
 		val port: Int = 25060

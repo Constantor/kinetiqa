@@ -21,4 +21,11 @@ fun Route.drugsRouting() {
 			call.respond(HttpStatusCode.OK, out)
 		}
 	}
+
+	route("/drugs.get") {
+		get {
+			val get: Map<String, String> = Params.get(call)
+			//call.respond(HttpStatusCode.OK, out)
+		}
+	}
 }
