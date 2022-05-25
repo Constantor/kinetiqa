@@ -5,7 +5,7 @@ import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 
-sealed class Drug(id: EntityID<Int>) : IntEntity(id) {
+class Drug(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<Drug>(Drugs)
 
     val labelName by Drugs.labelName
