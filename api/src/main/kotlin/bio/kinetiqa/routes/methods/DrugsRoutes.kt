@@ -16,7 +16,6 @@ fun Route.drugsRouting() {
 			val get: Map<String, String> = Params.get(call)
 			val out = transaction {
 				addLogger(StdOutSqlLogger)
-				Drug::class.java.`package`
 				Drug.all().toList()
 			}
 			call.respond(HttpStatusCode.OK, out)
