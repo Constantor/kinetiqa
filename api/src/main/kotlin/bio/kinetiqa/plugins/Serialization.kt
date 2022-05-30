@@ -11,7 +11,7 @@ fun Application.configureSerialization() {
     install(ContentNegotiation) {
         gson {
             addSerializationExclusionStrategy(object : ExclusionStrategy {
-                override fun shouldSkipField(fieldAttributes: FieldAttributes) = !fieldAttributes.declaredClass.packageName.equals("bio.kinetiqa.model.dataclasses")
+                override fun shouldSkipField(fieldAttributes: FieldAttributes) = !fieldAttributes.declaringClass.packageName.equals("bio.kinetiqa.model.dataclasses")
                 override fun shouldSkipClass(aClass: Class<*>?) = false
             })
         }
