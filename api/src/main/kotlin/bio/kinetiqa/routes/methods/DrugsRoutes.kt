@@ -4,6 +4,7 @@ import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import bio.kinetiqa.core.utils.Params
 import bio.kinetiqa.model.dataclasses.Drug
+import bio.kinetiqa.model.dataclasses.DrugDTO
 import bio.kinetiqa.model.tables.Drugs
 import io.ktor.http.*
 import io.ktor.server.response.*
@@ -16,7 +17,7 @@ fun Route.drugsRouting() {
 			val get: Map<String, String> = Params.get(call)
 			val out = transaction {
 				addLogger(StdOutSqlLogger)
-				Drug.all().toList()
+				Drug.all().map {drug -> DrugDTO.create(drug)}
 			}
 			call.respond(HttpStatusCode.OK, out)
 		}
