@@ -18,8 +18,10 @@ fun Application.configureSerialization() {
             val serializer: JsonSerializer<Entity<*>> =
                 JsonSerializer<Entity<*>> { src, _, context ->
                     val jsonObject = JsonObject()
-                    val idProperty = src::class.memberProperties.find { it.name == "id" }
-                    jsonObject.add(idProperty!!.name, context.serialize(idProperty::class.declaredMemberProperties.find { it.name == "value" }!!.getter.call(idProperty)))
+                    val idProperty = src::class.memberProperties.find { it.name == "id" }!!
+                    println(idProperty::class.simpleName)
+                    println(idProperty::class.memberProperties.stream().forEach{ println("   " + it.name)})
+                    //jsonObject.add(idProperty.name, context.serialize(idProperty::class.memberProperties.find { it.name == "value" }!!.getter.call(idProperty)))
                     for(property in src::class.declaredMemberProperties) {
                         jsonObject.add(property.name, context.serialize(property.getter.call(src)))
                     }
