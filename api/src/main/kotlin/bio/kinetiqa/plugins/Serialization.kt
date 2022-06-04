@@ -19,9 +19,12 @@ fun Application.configureSerialization() {
             val serializer: JsonSerializer<Drug> =
                 JsonSerializer<Drug> { src, _, context ->
                     val jsonObject = JsonObject()
+                    println(src::class.simpleName)
                     for(property in src::class.declaredMemberProperties) {
+                        println("   " + property.name)
                         if(property is KMutableProperty<*>) {
-                            jsonObject.add(property.name, context.serialize(property.getter.call()))
+                            println("   +")
+                            jsonObject.addProperty(property.name, property.getter.call().toString())
                         }
                     }
                     jsonObject
