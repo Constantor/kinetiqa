@@ -22,7 +22,7 @@ fun Application.configureSerialization() {
                     println(src::class.simpleName)
                     for(property in src::class.declaredMemberProperties) {
                         println("   " + property.name)
-                        jsonObject.addProperty(property.name, property.getter.call().toString())
+                        jsonObject.addProperty(property.name, property.getter.call(src).toString())
                     }
                     jsonObject
                 }
