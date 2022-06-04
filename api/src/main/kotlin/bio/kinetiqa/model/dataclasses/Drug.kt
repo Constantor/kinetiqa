@@ -1,7 +1,6 @@
 package bio.kinetiqa.model.dataclasses
 
 import bio.kinetiqa.model.tables.Drugs
-import com.google.gson.annotations.Expose
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID

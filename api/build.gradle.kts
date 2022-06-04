@@ -33,7 +33,6 @@ dependencies {
 	implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-serialization-gson:$ktorVersion")
-	implementation("io.ktor:ktor-serialization-jackson:$ktorVersion")
 
 	implementation("io.ktor:ktor-server-compression-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
