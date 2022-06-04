@@ -7,6 +7,7 @@ import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
 import org.jetbrains.exposed.dao.Entity
+import org.jetbrains.exposed.dao.id.EntityID
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.memberProperties
 
@@ -18,7 +19,7 @@ fun Application.configureSerialization() {
                 JsonSerializer<Entity<*>> { src, _, context ->
                     val jsonObject = JsonObject()
                     val idProperty = src::class.memberProperties.find { it.name == "id" }
-                    jsonObject.addProperty(idProperty!!.name, idProperty.getter.call(src).toString())
+                    jsonObject.add(idProperty!!.name, context.serialize(idProperty::class.declaredMemberProperties.find { it.name == "value" }!!.getter.call(idProperty)))
                     for(property in src::class.declaredMemberProperties) {
                         jsonObject.add(property.name, context.serialize(property.getter.call(src)))
                     }
