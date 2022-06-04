@@ -4,8 +4,6 @@ import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import bio.kinetiqa.core.utils.Params
 import bio.kinetiqa.model.dataclasses.Drug
-import bio.kinetiqa.model.dataclasses.DrugDTO
-import bio.kinetiqa.model.tables.Drugs
 import io.ktor.http.*
 import io.ktor.server.response.*
 import org.jetbrains.exposed.sql.*

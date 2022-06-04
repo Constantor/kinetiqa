@@ -1,28 +1,26 @@
 package bio.kinetiqa.plugins
 
 import bio.kinetiqa.model.dataclasses.Drug
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
 import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
-import java.lang.reflect.Type
+import org.jetbrains.exposed.dao.IntEntity
 import kotlin.reflect.full.declaredMemberProperties
-import kotlin.reflect.KMutableProperty
+import kotlin.reflect.full.memberProperties
 
 
 fun Application.configureSerialization() {
     install(ContentNegotiation) {
         gson {
-            val serializer: JsonSerializer<Drug> =
-                JsonSerializer<Drug> { src, _, context ->
+            val serializer: JsonSerializer<IntEntity> =
+                JsonSerializer<IntEntity> { src, _, context ->
                     val jsonObject = JsonObject()
-                    println(src::class.simpleName)
+                    val idProperty = src::class.memberProperties.find { it.name == "id" }
+                    jsonObject.add(idProperty!!.name, context.serialize(idProperty.getter.call(src)))
                     for(property in src::class.declaredMemberProperties) {
-                        println("   " + property.name)
-                        jsonObject.addProperty(property.name, property.getter.call(src).toString())
+                        jsonObject.add(property.name, context.serialize(property.getter.call(src)))
                     }
                     jsonObject
                 }
