@@ -1,4 +1,4 @@
-package bio.kinetiqa.model.dataclasses
+package bio.kinetiqa.model.entities
 
 import bio.kinetiqa.model.tables.Drugs
 import org.jetbrains.exposed.dao.IntEntity
