@@ -14,6 +14,9 @@ import io.ktor.server.sessions.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.NoSuchElementException
 
 fun Route.authRouting() {
     route("/sign.up") {
@@ -25,7 +28,7 @@ fun Route.authRouting() {
                     passwordHash = params["password"]!!
                 }
             }
-            call.sessions.set(UserSession(user.id.value))
+            call.sessions.set(UserSession(user.id.value, LocalDateTime.now().plusWeeks(1)))
             call.respond(HttpStatusCode.OK, "Sign up successful")
         }
     }
@@ -38,7 +41,7 @@ fun Route.authRouting() {
                     User.find(Users.email eq params["email"]!!).first()
                 }
                 if (user.passwordHash == params["password"]!!) {
-                    call.sessions.set(UserSession(user.id.value))
+                    call.sessions.set(UserSession(user.id.value, LocalDateTime.now().plusWeeks(1)))
                 } else {
                     call.respond(HttpStatusCode.OK, "Wrong password")
                 }
@@ -52,7 +55,7 @@ fun Route.authRouting() {
     authenticate("auth-session") {
         route("/test") {
             get {
-                call.respond(HttpStatusCode.OK, "You are logged in ${call.principal<UserSession>()!!.id}")
+                call.respond(HttpStatusCode.OK, "You are logged in ${call.principal<UserSession>()!!.userId}")
             }
         }
     }

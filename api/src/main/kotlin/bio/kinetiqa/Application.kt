@@ -11,6 +11,7 @@ import io.ktor.server.response.*
 import io.ktor.server.sessions.*
 import io.ktor.util.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import java.time.LocalDateTime
 
 fun main(args: Array<String>): Unit =
 	io.ktor.server.netty.EngineMain.main(args)
@@ -22,15 +23,20 @@ fun Application.module() {
 	configureHTTP()
 	configureDoubleReceive()
 	install(Sessions) {
+		val secretEncryptKey = hex("00112233445566778899aabbccddeeff")
 		val secretSignKey = hex("6819b57a326945c1968f45236589")
-		header<UserSession>("user_session", SessionStorageMemory()) {
-			transform(SessionTransportTransformerMessageAuthentication(secretSignKey))
+		header<UserSession>("user_session") {
+			transform(SessionTransportTransformerEncrypt(secretEncryptKey, secretSignKey))
 		}
 	}
 	install(Authentication) {
 		session<UserSession>("auth-session") {
 			validate { session ->
-				session
+				if(session.expirationDate.isAfter(LocalDateTime.now())) {
+					session
+				} else {
+					null
+				}
 			}
 		}
 	}
