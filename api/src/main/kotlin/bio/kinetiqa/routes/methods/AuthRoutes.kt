@@ -8,6 +8,7 @@ import bio.kinetiqa.model.sessions.UserSession
 import bio.kinetiqa.model.tables.Users
 import io.ktor.http.*
 import io.ktor.server.auth.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.sessions.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -16,9 +17,10 @@ import org.jetbrains.exposed.sql.insertAndGetId
 fun Route.authRouting() {
 	route("/sign.up") {
 		post {
+			val params = call.receiveParameters()
 			val user = User.new {
-				email = call.parameters["email"]!!
-				passwordHash = call.parameters["password"]!!
+				email = params["email"]!!
+				passwordHash = params["password"]!!
 			}
 			call.sessions.set(UserSession(user.id.value))
 			call.respond(HttpStatusCode.OK, "Sign up successful")
@@ -27,10 +29,10 @@ fun Route.authRouting() {
 
 	route("/sign.in") {
 		post {
-			val user: User
 			try {
-				user = User.find(Users.email eq call.parameters["email"]!!).first()
-				if (user.passwordHash == call.parameters["password"]!!) {
+				val params = call.receiveParameters()
+				val user = User.find(Users.email eq params["email"]!!).first()
+				if (user.passwordHash == params["password"]!!) {
 					call.sessions.set(UserSession(user.id.value))
 				} else {
 					call.respond(HttpStatusCode.OK, "Wrong password")
@@ -45,7 +47,7 @@ fun Route.authRouting() {
 	authenticate("auth-session") {
 		route("/test") {
 			get {
-				call.respond(HttpStatusCode.OK, "You are logged in")
+				call.respond(HttpStatusCode.OK, "You are logged in ${call.principal<UserSession>()!!.id}")
 			}
 		}
 	}
