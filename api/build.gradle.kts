@@ -36,6 +36,8 @@ dependencies {
 
 	implementation("io.ktor:ktor-server-compression-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
+	implementation("io.ktor:ktor-server-sessions:$ktorVersion")
+	implementation("io.ktor:ktor-server-auth:$ktorVersion")
 	implementation("ch.qos.logback:logback-classic:$logbackVersion")
 	implementation("io.ktor:ktor-server-double-receive:$ktorVersion")
 	testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")

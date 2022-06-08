@@ -3,22 +3,57 @@ package bio.kinetiqa.routes.methods
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import bio.kinetiqa.core.utils.Params
+import bio.kinetiqa.model.entities.User
+import bio.kinetiqa.model.sessions.UserSession
+import bio.kinetiqa.model.tables.Users
 import io.ktor.http.*
-import io.ktor.server.request.*
+import io.ktor.server.auth.*
 import io.ktor.server.response.*
+import io.ktor.server.sessions.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.insertAndGetId
 
 fun Route.authRouting() {
 	route("/sign.up") {
-		get {
-			val get: Map<String, String> = Params.get(call)
-			call.respond(HttpStatusCode.OK, "Sign up")
+		post {
+			val user = User.new {
+				email = call.parameters["email"]!!
+				passwordHash = call.parameters["password"]!!
+			}
+			call.sessions.set(UserSession(user.id.value))
+			call.respond(HttpStatusCode.OK, "Sign up successful")
 		}
 	}
 
 	route("/sign.in") {
+		post {
+			val user: User
+			try {
+				user = User.find(Users.email eq call.parameters["email"]!!).first()
+				if (user.passwordHash == call.parameters["password"]!!) {
+					call.sessions.set(UserSession(user.id.value))
+				} else {
+					call.respond(HttpStatusCode.OK, "Wrong password")
+				}
+			} catch (e: NoSuchElementException) {
+				call.respond(HttpStatusCode.OK, "No such user")
+			}
+			call.respond(HttpStatusCode.OK, "Sign in successful")
+		}
+	}
+
+	authenticate("auth-session") {
+		route("/test") {
+			get {
+				call.respond(HttpStatusCode.OK, "You are logged in")
+			}
+		}
+	}
+
+	route("/logout") {
 		get {
-			val get: Map<String, String> = Params.get(call)
-			call.respond(HttpStatusCode.OK, "Sign in")
+			call.sessions.clear<UserSession>()
+			call.respond(HttpStatusCode.OK, "Logout successful")
 		}
 	}
 }

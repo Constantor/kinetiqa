@@ -8,8 +8,8 @@ import org.jetbrains.exposed.dao.id.EntityID
 class User(id: EntityID<Long>) : LongEntity(id) {
     companion object : LongEntityClass<User>(Users)
 
-    val email by Users.email
-    val passwordHash by Users.passwordHash
+    var email by Users.email
+    var passwordHash by Users.passwordHash
     val passwordSalt by Users.passwordSalt
     val googleAuth by Users.googleAuth
     val name by Users.name
