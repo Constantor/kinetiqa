@@ -31,6 +31,7 @@ fun Route.coursesRouting() {
                     }
                     if (exists) {
                         call.respond(HttpStatusCode.BadRequest, "User already has this course")
+                        return@post
                     }
                     transaction {
                         Course.new {
@@ -41,6 +42,7 @@ fun Route.coursesRouting() {
                     }
                 } catch (e: NullPointerException) {
                     call.respond(HttpStatusCode.BadRequest, "Invalid request parameters")
+                    return@post
                 }
                 call.respond(HttpStatusCode.OK, "Course add successful")
             }
@@ -57,6 +59,7 @@ fun Route.coursesRouting() {
                     }
                 } catch (e: NullPointerException) {
                     call.respond(HttpStatusCode.BadRequest, "Invalid request parameters")
+                    return@post
                 }
                 call.respond(HttpStatusCode.OK, "Course delete successful")
             }
@@ -66,7 +69,6 @@ fun Route.coursesRouting() {
             get {
                 val curUserId = call.principal<UserSession>()!!.userId
                 val out = transaction {
-                    addLogger(StdOutSqlLogger)
                     Drugs.join(
                         Courses,
                         JoinType.INNER,

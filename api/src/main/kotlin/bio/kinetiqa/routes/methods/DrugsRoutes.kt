@@ -13,7 +13,6 @@ fun Route.drugsRouting() {
 	route("/drugs.list") {
 		get {
 			val out = transaction {
-				addLogger(StdOutSqlLogger)
 				Drug.all().toList()
 			}
 			call.respond(HttpStatusCode.OK, out)

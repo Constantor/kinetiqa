@@ -68,9 +68,9 @@ fun Route.authRouting() {
     }
 
     authenticate("auth-session") {
-        route("/test") {
+        route("/auth.test") {
             get {
-                call.respond(HttpStatusCode.OK, "You are logged in ${call.principal<UserSession>()!!.userId}")
+                call.respond(HttpStatusCode.OK, "You are logged in as ${call.principal<UserSession>()!!.userId}")
             }
         }
     }
