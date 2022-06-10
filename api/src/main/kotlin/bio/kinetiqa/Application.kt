@@ -6,6 +6,7 @@ import bio.kinetiqa.model.sessions.UserSession
 import bio.kinetiqa.model.tables.Users
 import io.ktor.server.application.*
 import bio.kinetiqa.plugins.*
+import io.ktor.http.*
 import io.ktor.server.auth.*
 import io.ktor.server.response.*
 import io.ktor.server.sessions.*
@@ -37,6 +38,9 @@ fun Application.module() {
 				} else {
 					null
 				}
+			}
+			challenge {
+				call.respond(HttpStatusCode.Unauthorized, "Session expired")
 			}
 		}
 	}

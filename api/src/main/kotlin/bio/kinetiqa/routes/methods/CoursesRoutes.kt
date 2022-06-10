@@ -20,7 +20,7 @@ import java.time.ZoneOffset
 
 fun Route.coursesRouting() {
     authenticate("auth-session") {
-        route("/user.courses.add") {
+        route("/courses.add") {
             post {
                 val curUserId = call.principal<UserSession>()!!.userId
                 try {
@@ -46,7 +46,7 @@ fun Route.coursesRouting() {
             }
         }
 
-        route("/user.courses.delete") {
+        route("/courses.delete") {
             post {
                 val curUserId = call.principal<UserSession>()!!.userId
                 try {
@@ -62,7 +62,7 @@ fun Route.coursesRouting() {
             }
         }
 
-        route("/user.courses.list") {
+        route("/courses.list") {
             get {
                 val curUserId = call.principal<UserSession>()!!.userId
                 val out = transaction {
@@ -71,7 +71,7 @@ fun Route.coursesRouting() {
                         Courses,
                         JoinType.INNER,
                         additionalConstraint = { (Courses.drugId eq Drugs.id) and (Courses.userId eq curUserId) })
-                        .slice(Drugs.id).selectAll().map { row -> row[Drugs.id] }.toList()
+                        .selectAll().map { row -> row[Drugs.id] }.toList()
                 }
                 call.respond(HttpStatusCode.OK, out)
             }
