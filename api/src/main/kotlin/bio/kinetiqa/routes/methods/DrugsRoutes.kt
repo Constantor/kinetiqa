@@ -35,16 +35,7 @@ fun Route.drugsRouting() {
 	}
 
 	authenticate("auth-session") {
-		route("/user.drugs") {
-			get {
-				val curUserId = call.principal<UserSession>()!!.userId
-				val out = transaction {
-					addLogger(StdOutSqlLogger)
-					Drugs.join(Courses, JoinType.INNER, additionalConstraint = {(Courses.drugId eq Drugs.id) and (Courses.userId eq curUserId)}).selectAll().toList()
-				}
-				call.respond(HttpStatusCode.OK, out)
-			}
-
+		route("/user.drugs.add") {
 			post {
 				val curUserId = call.principal<UserSession>()!!.userId
 				try {
@@ -53,8 +44,8 @@ fun Route.drugsRouting() {
 					val exists = !transaction {
 						Courses.select((Courses.userId eq curUserId) and (Courses.drugId eq curDrugId)).empty()
 					}
-					if(exists) {
-						call.respond(HttpStatusCode.BadRequest, "User alredy has this course")
+					if (exists) {
+						call.respond(HttpStatusCode.BadRequest, "User already has this course")
 					}
 					transaction {
 						Course.new {
@@ -68,8 +59,10 @@ fun Route.drugsRouting() {
 				}
 				call.respond(HttpStatusCode.OK, "Course add successful")
 			}
+		}
 
-			delete {
+		route("/user.drugs.delete") {
+			post {
 				val curUserId = call.principal<UserSession>()!!.userId
 				try {
 					val params = call.receiveParameters()
@@ -85,7 +78,14 @@ fun Route.drugsRouting() {
 		}
 
 		route("/user.drugs.list") {
-
+			get {
+				val curUserId = call.principal<UserSession>()!!.userId
+				val out = transaction {
+					addLogger(StdOutSqlLogger)
+					Drugs.join(Courses, JoinType.INNER, additionalConstraint = {(Courses.drugId eq Drugs.id) and (Courses.userId eq curUserId)}).selectAll().toList()
+				}
+				call.respond(HttpStatusCode.OK, out)
+			}
 		}
 	}
 }

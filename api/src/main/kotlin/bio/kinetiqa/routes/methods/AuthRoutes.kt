@@ -38,7 +38,7 @@ fun Route.authRouting() {
                         passwordHash = params["password"]!!
                     }
                 }
-                call.sessions.set(UserSession(user.id.value, LocalDateTime.now().plusWeeks(1)))
+                call.sessions.set(UserSession(user.id.value, LocalDateTime.now().plusWeeks(1).toString()))
             } catch (e: NullPointerException) {
                 call.respond(HttpStatusCode.BadRequest, "Invalid request parameters")
             }
@@ -54,7 +54,7 @@ fun Route.authRouting() {
                     User.find(Users.email eq params["email"]!!).first()
                 }
                 if (user.passwordHash == params["password"]!!) {
-                    call.sessions.set(UserSession(user.id.value, LocalDateTime.now().plusWeeks(1)))
+                    call.sessions.set(UserSession(user.id.value, LocalDateTime.now().plusWeeks(1).toString()))
                 } else {
                     call.respond(HttpStatusCode.BadRequest, "Wrong password")
                 }

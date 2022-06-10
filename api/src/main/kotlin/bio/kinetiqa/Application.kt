@@ -32,7 +32,7 @@ fun Application.module() {
 	install(Authentication) {
 		session<UserSession>("auth-session") {
 			validate { session ->
-				if(session.expirationDate.isAfter(LocalDateTime.now())) {
+				if(LocalDateTime.parse(session.expirationDate).isAfter(LocalDateTime.now())) {
 					session
 				} else {
 					null
