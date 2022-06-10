@@ -53,7 +53,7 @@ fun Route.coursesRouting() {
                     val params = call.receiveParameters()
                     val curDrugId = params["drug_id"]!!.toInt()
                     transaction {
-                        Courses.deleteWhere{(Courses.userId eq curUserId) and (Courses.drugId eq curDrugId)}
+                        Courses.deleteWhere { (Courses.userId eq curUserId) and (Courses.drugId eq curDrugId) }
                     }
                 } catch (e: NullPointerException) {
                     call.respond(HttpStatusCode.BadRequest, "Invalid request parameters")
@@ -67,7 +67,11 @@ fun Route.coursesRouting() {
                 val curUserId = call.principal<UserSession>()!!.userId
                 val out = transaction {
                     addLogger(StdOutSqlLogger)
-                    Drugs.join(Courses, JoinType.INNER, additionalConstraint = {(Courses.drugId eq Drugs.id) and (Courses.userId eq curUserId)}).slice(Drugs.id).selectAll()
+                    Drugs.join(
+                        Courses,
+                        JoinType.INNER,
+                        additionalConstraint = { (Courses.drugId eq Drugs.id) and (Courses.userId eq curUserId) })
+                        .slice(Drugs.id).selectAll().map { row -> row[Drugs.id] }.toList()
                 }
                 call.respond(HttpStatusCode.OK, out)
             }
