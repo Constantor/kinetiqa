@@ -31,6 +31,7 @@ fun Route.authRouting() {
                 }
                 if (exists) {
                     call.respond(HttpStatusCode.BadRequest, "User with such email already exists")
+                    return@post
                 }
                 val user = transaction {
                     User.new {
@@ -41,6 +42,7 @@ fun Route.authRouting() {
                 call.sessions.set(UserSession(user.id.value, LocalDateTime.now().plusWeeks(1).toString()))
             } catch (e: NullPointerException) {
                 call.respond(HttpStatusCode.BadRequest, "Invalid request parameters")
+                return@post
             }
             call.respond(HttpStatusCode.OK, "Sign up successful")
         }
@@ -57,11 +59,14 @@ fun Route.authRouting() {
                     call.sessions.set(UserSession(user.id.value, LocalDateTime.now().plusWeeks(1).toString()))
                 } else {
                     call.respond(HttpStatusCode.BadRequest, "Wrong password")
+                    return@post
                 }
             } catch (e: NoSuchElementException) {
                 call.respond(HttpStatusCode.BadRequest, "No such user")
+                return@post
             } catch (e: NullPointerException) {
                 call.respond(HttpStatusCode.BadRequest, "Invalid request parameters")
+                return@post
             }
             call.respond(HttpStatusCode.OK, "Sign in successful")
         }
