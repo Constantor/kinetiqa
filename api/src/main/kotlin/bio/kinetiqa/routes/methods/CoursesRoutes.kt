@@ -42,6 +42,7 @@ fun Route.coursesRouting() {
                     }
                 } catch (e: NullPointerException) {
                     call.respond(HttpStatusCode.BadRequest, "Invalid request parameters")
+                    println("No drug_id parameter")
                     return@post
                 }
                 call.respond(HttpStatusCode.OK, "Course add successful")
@@ -59,6 +60,7 @@ fun Route.coursesRouting() {
                     }
                 } catch (e: NullPointerException) {
                     call.respond(HttpStatusCode.BadRequest, "Invalid request parameters")
+                    println("No drug_id parameter")
                     return@post
                 }
                 call.respond(HttpStatusCode.OK, "Course delete successful")
