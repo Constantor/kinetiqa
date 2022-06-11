@@ -8,8 +8,8 @@ import org.jetbrains.exposed.dao.id.EntityID
 class Intake(id: EntityID<Long>) : LongEntity(id) {
     companion object : LongEntityClass<Intake>(Intakes)
 
-    val userId by Intakes.userId
-    val drugId by Intakes.drugId
-    val massIntookMg by Intakes.massIntookMg
-    val timeWhen by Intakes.timeWhen
+    var userId by Intakes.userId
+    var drugId by Intakes.drugId
+    var massIntookMg by Intakes.massIntookMg
+    var timeWhen by Intakes.timeWhen
 }
