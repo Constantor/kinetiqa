@@ -12,6 +12,7 @@ fun Application.configureRouting() {
 			authRouting()
 			drugsRouting()
 			coursesRouting()
+			notificationsRouting()
 			route("/method/{...}") {
 				handle {
 					call.respond(HttpStatusCode.NotFound)

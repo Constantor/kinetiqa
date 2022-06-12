@@ -8,11 +8,11 @@ import org.jetbrains.exposed.dao.id.EntityID
 class Schedule(id: EntityID<Long>) : LongEntity(id) {
     companion object : LongEntityClass<Schedule>(Schedules)
 
-    val userId by Schedules.userId
-    val drugId by Schedules.drugId
-    val comment by Schedules.comment
-    val whenTaken by Schedules.whenTaken
-    val dosageMg by Schedules.dosageMg
-    val weekDay by Schedules.weekDay
-    val timeOfDay by Schedules.timeOfDay
+    var userId by Schedules.userId
+    var drugId by Schedules.drugId
+    var comment by Schedules.comment
+    var whenTaken by Schedules.whenTaken
+    var dosageMg by Schedules.dosageMg
+    var weekDay by Schedules.weekDay
+    var timeOfDay by Schedules.timeOfDay
 }
