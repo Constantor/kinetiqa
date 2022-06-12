@@ -14,11 +14,8 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.StdOutSqlLogger
-import org.jetbrains.exposed.sql.addLogger
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -27,7 +24,7 @@ fun Route.drugsRouting() {
 	route("/drugs.list") {
 		get {
 			val out = transaction {
-				Drug.all().toList()
+				Drug.all().orderBy(Drugs.labelName to SortOrder.DESC).toList()
 			}
 			call.respond(HttpStatusCode.OK, out)
 		}
