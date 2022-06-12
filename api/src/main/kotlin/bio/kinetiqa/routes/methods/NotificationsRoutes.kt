@@ -72,7 +72,7 @@ fun Route.notificationsRouting() {
                 val curUserId = call.principal<UserSession>()!!.userId
                 val out = transaction {
                     val userDrugs =
-                        Courses.slice(Courses.drugId).select(Courses.userId eq curUserId).map { row -> row[Drugs.id] }
+                        Courses.select(Courses.userId eq curUserId).map { row -> row[Courses.drugId] }
                             .toList()
                     val ans = HashMap<Int, Boolean>()
                     for (drug in userDrugs) {
