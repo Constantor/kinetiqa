@@ -24,7 +24,7 @@ fun Route.drugsRouting() {
 	route("/drugs.list") {
 		get {
 			val out = transaction {
-				Drug.all().orderBy(Drugs.labelName to SortOrder.DESC).toList()
+				Drug.all().orderBy(Drugs.labelName to SortOrder.ASC).toList()
 			}
 			call.respond(HttpStatusCode.OK, out)
 		}
