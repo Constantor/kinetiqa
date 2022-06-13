@@ -47,7 +47,6 @@ fun Route.drugsRouting() {
 					}
 				} catch (e: NullPointerException) {
 					call.respond(HttpStatusCode.BadRequest, "Invalid request parameters")
-					println("No drug_id parameter")
 					return@post
 				}
 				call.respond(HttpStatusCode.OK, "Intake add successful")

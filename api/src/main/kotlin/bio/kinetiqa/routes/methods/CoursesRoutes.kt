@@ -30,7 +30,7 @@ fun Route.coursesRouting() {
                         Courses.select((Courses.userId eq curUserId) and (Courses.drugId eq curDrugId)).empty()
                     }
                     if (exists) {
-                        call.respond(HttpStatusCode.BadRequest, "User already has this course")
+                        call.respond(HttpStatusCode.OK, "User already has this course")
                         return@post
                     }
                     transaction {
@@ -42,7 +42,6 @@ fun Route.coursesRouting() {
                     }
                 } catch (e: NullPointerException) {
                     call.respond(HttpStatusCode.BadRequest, "Invalid request parameters")
-                    println("No drug_id parameter")
                     return@post
                 }
                 call.respond(HttpStatusCode.OK, "Course add successful")
@@ -60,7 +59,6 @@ fun Route.coursesRouting() {
                     }
                 } catch (e: NullPointerException) {
                     call.respond(HttpStatusCode.BadRequest, "Invalid request parameters")
-                    println("No drug_id parameter")
                     return@post
                 }
                 call.respond(HttpStatusCode.OK, "Course delete successful")
