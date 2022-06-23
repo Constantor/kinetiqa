@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.Button
 import android.widget.ListView
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -25,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 	var substances : MutableList<Substance> = ArrayList()
 	lateinit var subList : ListView
 	private lateinit var appBarConfiguration: AppBarConfiguration
+	private lateinit var settingsButton: Button
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -47,12 +50,12 @@ class MainActivity : AppCompatActivity() {
 
 		// Not working sheet
 
-		val host: NavHostFragment = supportFragmentManager
+/*		val host: NavHostFragment = supportFragmentManager
 			.findFragmentById(R.id.navFragment) as NavHostFragment? ?: return
 		val navLeftController = host.navController
 
 		val sideBar = findViewById<NavigationView>(R.id.nav_left_view)
-		sideBar?.setupWithNavController(navLeftController)
+		sideBar?.setupWithNavController(navLeftController)*/
 
 
 /*		appBarConfiguration = AppBarConfiguration(navController.graph
@@ -60,10 +63,17 @@ class MainActivity : AppCompatActivity() {
 		val toolBar = findViewById<Toolbar>(R.id.toolbar)
 		setSupportActionBar(toolBar) // для верхнего меню
 		toolBar.setupWithNavController(navController, appBarConfiguration)*/
+
 	}
 
 	fun addSubstance(view: View) {
 		val subIntent = Intent(this, AddSubActivity::class.java)
 		startActivity(subIntent)
 	}
+
+	fun settingsClick(view: View) {
+		val intent = Intent(this, SettingsActivity::class.java)
+		startActivity(intent)
+	}
+
 }

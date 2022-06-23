@@ -12,12 +12,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class SubstanceAdapter extends ArrayAdapter<Substance> {
+public class AddSubstanceAdapter extends ArrayAdapter<Substance> {
     private LayoutInflater inflater;
     private int layout;
     private List<Substance> states;
 
-    public SubstanceAdapter(Context context, int resource, List<Substance> states) {
+    public AddSubstanceAdapter(Context context, int resource, List<Substance> states) {
         super(context, resource, states);
         this.states = states;
         this.layout = resource;
@@ -27,9 +27,9 @@ public class SubstanceAdapter extends ArrayAdapter<Substance> {
 
         View view = inflater.inflate(this.layout, parent, false);
 
-        ImageView flagView = view.findViewById(R.id.photo);
-        TextView nameView = view.findViewById(R.id.name);
-        TextView capitalView = view.findViewById(R.id.description);
+        ImageView flagView = view.findViewById(R.id.addPhoto);
+        TextView nameView = view.findViewById(R.id.addName);
+        TextView capitalView = view.findViewById(R.id.addDescription);
 
         Substance state = states.get(position);
 
@@ -37,16 +37,16 @@ public class SubstanceAdapter extends ArrayAdapter<Substance> {
         nameView.setText(state.getName());
         capitalView.setText(state.getDescription());
 
-        Switch NotifySwitch = view.findViewById(R.id.notification_switch);
-        NotifySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-            DataBase.addNotificationToBase(state);
-        } else {
-            DataBase.deleteNotificationFromBase(state);
-        }
-    }
-});
+        Switch addSwitch = view.findViewById(R.id.addSwitch);
+        addSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    DataBase.addSubstanceToBase(state);
+                } else {
+                    DataBase.deleteSubstanceFromBase(state);
+                }
+            }
+        });
 
         return view;
     }

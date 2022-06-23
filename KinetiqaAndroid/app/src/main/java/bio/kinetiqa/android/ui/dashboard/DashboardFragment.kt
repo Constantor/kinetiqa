@@ -43,7 +43,7 @@ class DashboardFragment : Fragment() {
 		val root: View = binding.root
 
 		//val view: View = inflater.inflate(R.layout.fragment_dashboard, container, false)
-		setSubstData()// TODO: хардкод
+		setSubstData()
 		subList = root.findViewById(R.id.subList)
 		val context : Context? = this.context
 		if (!isAdded) { Log.e("check_activity", "WTF why everything is not working") }
@@ -75,9 +75,6 @@ class DashboardFragment : Fragment() {
 	}
 
 	fun setSubstData() {
-		substances.add(Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo))
-		substances.add(Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo))
-		substances.add(Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo))
-		substances.add(Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo))
+		substances = DataBase.getListOfSubstances()
 	}
 }

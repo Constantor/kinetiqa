@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/photo"
+        android:id="@+id/addPhoto"
         android:layout_width="127dp"
         android:layout_height="135dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,52 +16,35 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/addName"
         android:layout_width="276dp"
         android:layout_height="28dp"
-        android:layout_marginLeft="16dp"
-        android:text="Название"
+        android:text="@string/name"
         app:layout_constraintBottom_toTopOf="@+id/addDescription"
         app:layout_constraintLeft_toRightOf="@+id/addPhoto"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/addDescription"
         android:layout_width="264dp"
         android:layout_height="90dp"
-        android:layout_marginLeft="16dp"
-        android:text="Описание"
+        android:text="@string/description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/addPhoto"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addName" />
 
-    <Button
-        android:id="@+id/details"
-        android:layout_width="136dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="187dp"
-        android:text="Details"
+    <Switch
+        android:id="@+id/addSwitch"
+        android:layout_width="161dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/add_to_my_list"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/addPhoto"
-        app:layout_constraintStart_toStartOf="@+id/addPhoto"
         app:layout_constraintTop_toBottomOf="@+id/addDescription"
         app:layout_constraintVertical_bias="0.0" />
-
-    <Switch
-        android:id="@+id/notification_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="4dp"
-        android:text="Notification"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/details"
-        app:layout_constraintStart_toEndOf="@+id/addPhoto"
-        app:layout_constraintTop_toBottomOf="@+id/addDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
