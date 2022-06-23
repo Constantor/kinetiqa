@@ -24,4 +24,6 @@
     <string name="add_to_my_list">Add to my list</string>
     <string name="description">Description</string>
     <string name="name">Name</string>
+    <string name="configure">Configure</string>
+    <string name="apply">Apply</string>
 </resources>

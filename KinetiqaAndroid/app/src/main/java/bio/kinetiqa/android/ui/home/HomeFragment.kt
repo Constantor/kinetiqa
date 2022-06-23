@@ -1,5 +1,6 @@
 package bio.kinetiqa.android.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -8,6 +9,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import bio.kinetiqa.android.AddSubActivity
 import bio.kinetiqa.android.R
 import bio.kinetiqa.android.databinding.FragmentHomeBinding
 import com.github.mikephil.charting.charts.LineChart
@@ -26,6 +28,7 @@ import com.github.mikephil.charting.utils.ColorTemplate
 class HomeFragment : Fragment(), OnSeekBarChangeListener,
 	OnChartGestureListener, OnChartValueSelectedListener {
 
+	public lateinit var subIds: MutableList<Integer>
 	private lateinit var homeViewModel: HomeViewModel
 	private var _binding: FragmentHomeBinding? = null
 
@@ -51,8 +54,8 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 		val root: View = binding.root
 
 
-		tvX = root.findViewById(R.id.tvXMax)
-		tvY = root.findViewById(R.id.tvYMax)
+		//tvX = root.findViewById(R.id.tvXMax)
+		//tvY = root.findViewById(R.id.tvYMax)
 
 		chart = root.findViewById(R.id.chart1)
 
@@ -64,8 +67,6 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 	}
 
 	private fun setInformationAboutChart() {
-
-
 /*		seekBarX = root.findViewById(R.id.seekBar1)
 		seekBarX.setOnSeekBarChangeListener(this)
 
@@ -104,6 +105,14 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 		l.setDrawInside(false)
 	}
 
+	fun setGraphSubstances(view: View) {
+		val subIntent = Intent(context, AddSubActivity::class.java)
+		startActivity(subIntent)
+	}
+
+	fun applyChanges(view: View) {
+		//TODO
+	}
 
 	private fun addDataOnGraph() {
 		val entriesFirst: ArrayList<Entry> = ArrayList()

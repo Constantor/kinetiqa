@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
-		xmlns:tools="http://schemas.android.com/tools"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		tools:context=".ui.home.HomeFragment">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/relativeLayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".ui.home.HomeFragment">
 
 	<com.github.mikephil.charting.charts.LineChart
 		android:id="@+id/chart1"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"/>
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_marginTop="120dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
 
-	<TextView
-		android:id="@+id/tvXMax"
-		android:layout_width="50dp"
-		android:layout_height="wrap_content"
-		android:layout_alignParentRight="true"
-		android:text="@string/dash"
-		android:layout_marginBottom="15dp"
-		android:layout_marginRight="10dp"
-		android:gravity="right"
-		android:textAppearance="?android:attr/textAppearanceMedium" />
+	<Button
+		android:id="@+id/ConfigureButton"
+		android:layout_width="118dp"
+		android:layout_height="45dp"
+		android:onClick="applyChanges"
+		android:text="@string/apply"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent" />
 
-	<TextView
-		android:id="@+id/tvYMax"
-		android:layout_width="50dp"
+	<Button
+		android:id="@+id/button3"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_alignParentRight="true"
-		android:text="@string/dash"
-		android:layout_marginBottom="15dp"
-		android:layout_marginRight="10dp"
-		android:gravity="right"
-		android:textAppearance="?android:attr/textAppearanceMedium" />
-</RelativeLayout>
+		android:onClick="setGraphSubstances"
+		android:text="@string/configure"
+		app:layout_constraintBottom_toTopOf="@+id/ConfigureButton"
+		app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

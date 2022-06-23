@@ -1,24 +1,19 @@
 package bio.kinetiqa.android
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.Button
 import android.widget.ListView
-import android.widget.Toast
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import bio.kinetiqa.android.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
 
 
 class MainActivity : AppCompatActivity() {
@@ -66,14 +61,20 @@ class MainActivity : AppCompatActivity() {
 
 	}
 
+	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+		menuInflater.inflate(R.menu.action_bar, menu)
+		return true
+	}
+
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+		val intent = Intent(this, SettingsActivity::class.java)
+		startActivity(intent)
+		return true
+	}
+
 	fun addSubstance(view: View) {
 		val subIntent = Intent(this, AddSubActivity::class.java)
 		startActivity(subIntent)
-	}
-
-	fun settingsClick(view: View) {
-		val intent = Intent(this, SettingsActivity::class.java)
-		startActivity(intent)
 	}
 
 }
