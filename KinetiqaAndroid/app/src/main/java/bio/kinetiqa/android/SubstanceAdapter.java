@@ -1,5 +1,6 @@
 package bio.kinetiqa.android;
 
+import android.provider.ContactsContract;
 import android.widget.ArrayAdapter;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -38,12 +39,15 @@ public class SubstanceAdapter extends ArrayAdapter<Substance> {
         capitalView.setText(state.getDescription());
 
         Switch NotifySwitch = view.findViewById(R.id.notification_switch);
+        NotifySwitch.setChecked(DataBase.notificationStatus(state.getResourceID()));
         NotifySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
             DataBase.addNotificationToBase(state);
+            DataBase.notifyStatus.put(state.getResourceID(), true);
         } else {
             DataBase.deleteNotificationFromBase(state);
+            DataBase.notifyStatus.put(state.getResourceID(), false);
         }
     }
 });

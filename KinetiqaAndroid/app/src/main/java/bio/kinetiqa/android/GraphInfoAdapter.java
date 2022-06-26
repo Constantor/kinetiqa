@@ -35,8 +35,9 @@ public class GraphInfoAdapter extends ArrayAdapter<Substance> {
         flagView.setImageResource(state.getImageResource());
         nameView.setText(state.getName());
 
-        Switch addSwitch = view.findViewById(R.id.addSwitch);
-        addSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Switch graphSwitch = view.findViewById(R.id.addSwitch);
+        graphSwitch.setChecked(DataBase.graphStatus(state.getResourceID()));
+        graphSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     DataBase.addSubstanceOnGraph(state);
