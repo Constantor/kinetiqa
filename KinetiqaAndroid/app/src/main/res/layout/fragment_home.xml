@@ -18,7 +18,7 @@
 		app:layout_constraintTop_toTopOf="parent" />
 
 	<Button
-		android:id="@+id/ConfigureButton"
+		android:id="@+id/applyButton"
 		android:layout_width="118dp"
 		android:layout_height="45dp"
 		android:onClick="applyChanges"
@@ -27,12 +27,11 @@
 		app:layout_constraintEnd_toEndOf="parent" />
 
 	<Button
-		android:id="@+id/button3"
+		android:id="@+id/confButton"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:onClick="setGraphSubstances"
 		android:text="@string/configure"
-		app:layout_constraintBottom_toTopOf="@+id/ConfigureButton"
+		app:layout_constraintBottom_toTopOf="@+id/applyButton"
 		app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,21 +20,14 @@ public class AddSubActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_sub);
 
-        ArrayList<Substance> products = new ArrayList<Substance>();
-        if(products.size() == 0){
-            products.add(new Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo));
-            products.add(new Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo));
-            products.add(new Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo));
-            products.add(new Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo));
-            products.add(new Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo));
-        }
+        ArrayList<Substance> products;
+        products = DataBase.getMainSubstanceBase();
         ListView productList = findViewById(R.id.addSubList);
         AddSubstanceAdapter adapter = new AddSubstanceAdapter(this, R.layout.add_sub_item, products);
         productList.setAdapter(adapter);
     }
 
     public void addSubstance(View view) {
-        //TODO(update of user list)
         finish();
     }
 }

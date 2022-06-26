@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataBase {
+    public static Integer UserId = -1;
+    public static ArrayList<Integer> graphInfoID = new ArrayList<>();
 
     static void addNotificationToBase(Substance state) {
         //TODO
@@ -28,10 +30,10 @@ public class DataBase {
     @NotNull
     public static List<Substance> getListOfSubstances() {
         List<Substance> substances = new ArrayList<>();
-        substances.add(new Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo));
-        substances.add(new Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo));
-        substances.add(new Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo));
-        substances.add(new Substance("Каменный уголь", "аыыыаыа", R.drawable.test_photo));
+        substances.add(new Substance("Каменный уголь", "какое-то описание", R.drawable.test_photo, 0));
+        substances.add(new Substance("Каменный уголь", "какое-то описание", R.drawable.test_photo, 0));
+        substances.add(new Substance("Каменный уголь", "какое-то описание", R.drawable.test_photo, 0));
+        substances.add(new Substance("Каменный уголь", "какое-то описание", R.drawable.test_photo, 0));
         return substances;
         //TODO
     }
@@ -45,6 +47,25 @@ public class DataBase {
         entries.add(new Entry(5f, 4f));
         entries.add(new Entry(6f, 1f));
         return entries;
+        //TODO
+    }
+
+    public static void addSubstanceOnGraph(Substance state) {
+        graphInfoID.add(state.getResourceID());
+    }
+
+    public static void deleteSubstanceFromGraph(Substance state) {
+        graphInfoID.remove(state.getResourceID());
+    }
+
+    public static ArrayList<Substance> getMainSubstanceBase() {
+        ArrayList<Substance> products = new ArrayList<>();
+        products.add(new Substance("Каменный уголь", "какое-то описание", R.drawable.test_photo, 0));
+        products.add(new Substance("Каменный уголь", "какое-то описание", R.drawable.test_photo, 0));
+        products.add(new Substance("Каменный уголь", "какое-то описание", R.drawable.test_photo, 0));
+        products.add(new Substance("Каменный уголь", "какое-то описание", R.drawable.test_photo, 0));
+        products.add(new Substance("Каменный уголь", "какое-то описание", R.drawable.test_photo, 0));
+        return products;
         //TODO
     }
 }

@@ -43,28 +43,7 @@ class DashboardFragment : Fragment() {
 		val root: View = binding.root
 
 		//val view: View = inflater.inflate(R.layout.fragment_dashboard, container, false)
-		setSubstData()
-		subList = root.findViewById(R.id.subList)
-		val context : Context? = this.context
-		if (!isAdded) { Log.e("check_activity", "WTF why everything is not working") }
-		val substAdapter = SubstanceAdapter(activity, R.layout.list_item, substances)
-		subList.adapter = substAdapter
-
-		/// TODO: вероятно поп-ап с подробным окном лекарства
-				val itemListener =
-					AdapterView.OnItemClickListener { parent, v, position, id -> // получаем выбранный пункт
-						val selectedState: Substance =
-							parent.getItemAtPosition(position) as Substance
-						Toast.makeText(
-							activity?.applicationContext, "Был выбран пункт " + selectedState.name,
-							Toast.LENGTH_SHORT
-						).show()
-					}
-		subList.setOnItemClickListener(itemListener)
-		///
-
-		add_substance = root.findViewById(R.id.button_add_substance)
-		//add_substance.setOnClickListener();
+		updateList(root);
 
 		return root
 	}
@@ -76,5 +55,29 @@ class DashboardFragment : Fragment() {
 
 	fun setSubstData() {
 		substances = DataBase.getListOfSubstances()
+	}
+
+	fun updateList(root: View) {
+		setSubstData()
+		subList = root.findViewById(R.id.subList)
+		val context : Context? = this.context
+		if (!isAdded) { Log.e("check_activity", "WTF why everything is not working") }
+		val substAdapter = SubstanceAdapter(activity, R.layout.list_item, substances)
+		subList.adapter = substAdapter
+
+		/// TODO: вероятно поп-ап с подробным окном лекарства
+		val itemListener =
+			AdapterView.OnItemClickListener { parent, v, position, id -> // получаем выбранный пункт
+				val selectedState: Substance =
+					parent.getItemAtPosition(position) as Substance
+				Toast.makeText(
+					activity?.applicationContext, "Был выбран пункт " + selectedState.name,
+					Toast.LENGTH_SHORT
+				).show()
+			}
+		subList.setOnItemClickListener(itemListener)
+		///
+
+		add_substance = root.findViewById(R.id.button_add_substance)
 	}
 }

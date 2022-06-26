@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import bio.kinetiqa.android.AddSubActivity
+import bio.kinetiqa.android.DataBase
+import bio.kinetiqa.android.GraphInfoActivity
 import bio.kinetiqa.android.R
 import bio.kinetiqa.android.databinding.FragmentHomeBinding
 import com.github.mikephil.charting.charts.LineChart
@@ -31,6 +33,8 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 	public lateinit var subIds: MutableList<Integer>
 	private lateinit var homeViewModel: HomeViewModel
 	private var _binding: FragmentHomeBinding? = null
+	private lateinit var config: Button
+	private lateinit var apply: Button
 
 	// This property is only valid between onCreateView and
 	// onDestroyView.
@@ -62,6 +66,17 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 		setInformationAboutChart();
 
 		addDataOnGraph();
+
+		config = root.findViewById(R.id.confButton)
+		config.setOnClickListener {
+			val graphIntent = Intent(context, GraphInfoActivity::class.java)
+			startActivity(graphIntent)
+		}
+
+		apply = root.findViewById(R.id.applyButton)
+		apply.setOnClickListener {
+			addDataOnGraph()
+		}
 
 		return root
 	}
@@ -105,9 +120,9 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 		l.setDrawInside(false)
 	}
 
-	fun setGraphSubstances(view: View) {
-		val subIntent = Intent(context, AddSubActivity::class.java)
-		startActivity(subIntent)
+	fun setGraph(view: View) {
+		//val graphIntent = Intent(context, GraphInfoActivity::class.java)
+		//startActivity(graphIntent)
 	}
 
 	fun applyChanges(view: View) {
@@ -115,6 +130,7 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 	}
 
 	private fun addDataOnGraph() {
+		//TODO Change on normal
 		val entriesFirst: ArrayList<Entry> = ArrayList()
 		entriesFirst.add(Entry(1f, 5f))
 		entriesFirst.add(Entry(2f, 2f))
@@ -149,6 +165,19 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 
 
 		chart.invalidate()
+
+		//Normally
+
+/*		chart.clear()
+		val dataSet: ArrayList<ILineDataSet> = ArrayList()
+		for (id in DataBase.graphInfoID) {
+			val entriesFirst: ArrayList<Entry> = DataBase.getGraphLine(id)
+			val datasetFirst = LineDataSet(entriesFirst, "График")
+			dataSet.add(datasetFirst)
+		}
+		val getData = LineData(dataSet)
+		chart.data = getData
+		chart.invalidate()*/
 	}
 
 	override fun onDestroyView() {

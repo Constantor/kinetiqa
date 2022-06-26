@@ -42,23 +42,6 @@ class MainActivity : AppCompatActivity() {
 		)
 		setupActionBarWithNavController(navController, appBarConfiguration)
 		navView.setupWithNavController(navController)
-
-		// Not working sheet
-
-/*		val host: NavHostFragment = supportFragmentManager
-			.findFragmentById(R.id.navFragment) as NavHostFragment? ?: return
-		val navLeftController = host.navController
-
-		val sideBar = findViewById<NavigationView>(R.id.nav_left_view)
-		sideBar?.setupWithNavController(navLeftController)*/
-
-
-/*		appBarConfiguration = AppBarConfiguration(navController.graph
-			, drawerLayout = drawer_layout) // для бокового меню
-		val toolBar = findViewById<Toolbar>(R.id.toolbar)
-		setSupportActionBar(toolBar) // для верхнего меню
-		toolBar.setupWithNavController(navController, appBarConfiguration)*/
-
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
