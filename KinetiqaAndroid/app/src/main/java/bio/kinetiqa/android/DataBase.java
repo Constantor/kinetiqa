@@ -18,23 +18,23 @@ public class DataBase {
     static HashMap<Integer, Boolean> getNotifications() {
         return new HashMap<>();
         //TODO
-    }
+    } // Вернуть мапу всех id лекарств пользователя и поставлены ли на них нотификации
 
     static void addNotificationToBase(Substance state) {
         //TODO
-    }
+    }//Добавить нотификацию для данного вещества. Можно получить id по state.getResourceID()
 
     static void deleteNotificationFromBase(Substance state) {
         //TODO
-    }
+    }// Удалить нотификацию для данного вещества.
 
     static void addSubstanceToBase(Substance state) {
         //TODO
-    }
+    } // Вся информация про лекарство в класс state. Добавить вещество пользователю
 
     static void deleteSubstanceFromBase(Substance state) {
         //TODO
-    }
+    } // Удалить лекарство для пользователя
 
     @NotNull
     public static List<Substance> getListOfSubstances() {
@@ -45,7 +45,7 @@ public class DataBase {
         substances.add(new Substance("Каменный уголь 8", "какое-то описание", R.drawable.test_photo, 8));
         return substances;
         //TODO
-    }
+    } // Вернуть список всех лекарств пользователя. Как создавать Объект класса Substance видно
 
     public static ArrayList<Entry> getGraphLine(int subId) {
         ArrayList<Entry> entries = new ArrayList<Entry>();
@@ -57,7 +57,7 @@ public class DataBase {
         entries.add(new Entry(6f, 1f));
         return entries;
         //TODO
-    }
+    } // по id лекарства получить список точек графика приема - координат графика - (ось X, ось Y)
 
     public static void addSubstanceOnGraph(Substance state) {
         graphInfoID.add(state.getResourceID());
@@ -76,7 +76,7 @@ public class DataBase {
         products.add(new Substance("Каменный уголь 4", "какое-то описание", R.drawable.test_photo, 4));
         return products;
         //TODO
-    }
+    } // Список лекарств, которые поддерживает наше приложение, и которые пользователь может добавить себе
 
     public static boolean notificationStatus(int resourceID) {
         Boolean result = notifyStatus.get(resourceID);
@@ -89,4 +89,12 @@ public class DataBase {
     public static boolean graphStatus(int resourceId) {
         return graphInfoID.contains(resourceId);
     }
+
+    public static void takingMedication(int resourceId) {
+        //TODO
+    } // добавить запись о приеме лекарства (Только что увидел, что не добавил кнопку про приём, но это 5 минут работы и будет сделано)
+
+    /* public static void login(some info) {
+    }  // Думаю можно дать пользователю нулевое id какое-нибудь на самом деле. Но если хочешь реализуй
+    */
 }
