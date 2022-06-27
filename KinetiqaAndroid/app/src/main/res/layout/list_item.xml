@@ -7,61 +7,55 @@
 
     <ImageView
         android:id="@+id/photo"
-        android:layout_width="127dp"
-        android:layout_height="135dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="148dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/addName"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toStartOf="@+id/notification_switch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="276dp"
-        android:layout_height="28dp"
-        android:layout_marginLeft="16dp"
-        android:text="Название"
-        app:layout_constraintBottom_toTopOf="@+id/addDescription"
-        app:layout_constraintLeft_toRightOf="@+id/addPhoto"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="135dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/alice"
+        android:text="@string/listName"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:typeface="normal"
+        app:layout_constraintEnd_toStartOf="@+id/notification_switch"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/photo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="264dp"
-        android:layout_height="90dp"
-        android:layout_marginLeft="16dp"
-        android:text="Описание"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toRightOf="@+id/addPhoto"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addName" />
-
-    <Button
-        android:id="@+id/details"
-        android:layout_width="136dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="187dp"
-        android:text="Details"
+        android:layout_height="86dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/listDesc"
+        android:textAlignment="viewStart"
+        android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/addPhoto"
-        app:layout_constraintStart_toStartOf="@+id/addPhoto"
-        app:layout_constraintTop_toBottomOf="@+id/addDescription"
+        app:layout_constraintStart_toEndOf="@+id/photo"
+        app:layout_constraintTop_toBottomOf="@+id/name"
         app:layout_constraintVertical_bias="0.0" />
 
     <Switch
         android:id="@+id/notification_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="4dp"
-        android:text="Notification"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/details"
-        app:layout_constraintStart_toEndOf="@+id/addPhoto"
-        app:layout_constraintTop_toBottomOf="@+id/addDescription" />
+        android:text="Уведомления"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/photo"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

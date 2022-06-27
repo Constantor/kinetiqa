@@ -1,6 +1,7 @@
 package bio.kinetiqa.android.ui.home
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -10,12 +11,12 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import bio.kinetiqa.android.DataBase
 import bio.kinetiqa.android.GraphInfoActivity
 import bio.kinetiqa.android.R
 import bio.kinetiqa.android.databinding.FragmentHomeBinding
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -82,42 +83,34 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 	}
 
 	private fun setInformationAboutChart() {
-/*		seekBarX = root.findViewById(R.id.seekBar1)
-		seekBarX.setOnSeekBarChangeListener(this)
-
-		seekBarY = root.findViewById(R.id.seekBar2)
-		seekBarY.setOnSeekBarChangeListener(this)*/
 
 		chart.setOnChartValueSelectedListener(this)
 
 		chart.setDrawGridBackground(false)
-		chart.getDescription().setEnabled(false)
-		chart.setDrawBorders(false)
+		chart.getDescription().text = "day"
+		//chart.setDrawBorders(false)
 
-		chart.getAxisLeft().setEnabled(false)
-		chart.getAxisRight().setDrawAxisLine(false)
-		chart.getAxisRight().setDrawGridLines(false)
-		chart.getXAxis().setDrawAxisLine(false)
-		chart.getXAxis().setDrawGridLines(false)
+		var xAxis = chart.xAxis
+		xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);                // Положение оси X по умолчанию выше
 
-		// enable touch gestures
-		chart.setTouchEnabled(true)
+		chart.getAxisRight().setEnabled(false)
+		xAxis.setAxisLineWidth(2F);
 
-		// enable scaling and dragging
-		chart.setDragEnabled(true)
-		chart.setScaleEnabled(true)
 
-		// if disabled, scaling can be done on x- and y-axis separately
-		chart.setPinchZoom(false)
+		var yAxis = chart.axisLeft             // Положение оси X по умолчанию выше
+		yAxis.setAxisLineWidth(2F);
 
-		/*seekBarX.setProgress(20)
-		seekBarY.setProgress(100)*/
 
-		val l: Legend = chart.getLegend()
+		 chart.setPinchZoom(true)
+
+
+		//TODO
+
+
+/*		val l: Legend = chart.getLegend()
 		l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-		l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
 		l.orientation = Legend.LegendOrientation.VERTICAL
-		l.setDrawInside(false)
+		l.setDrawInside(false)*/
 	}
 
 	fun setGraph(view: View) {
@@ -135,23 +128,28 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 		entriesFirst.add(Entry(1f, 5f))
 		entriesFirst.add(Entry(2f, 2f))
 		entriesFirst.add(Entry(3f, 1f))
-		entriesFirst.add(Entry(4f, -3f))
+		entriesFirst.add(Entry(4f, 0f))
 		entriesFirst.add(Entry(5f, 4f))
 		entriesFirst.add(Entry(6f, 1f))
 
 		val datasetFirst = LineDataSet(entriesFirst, "График первый")
+		datasetFirst.color = Color.RED;
+		datasetFirst.setCircleColor(Color.BLACK)
+		datasetFirst.setMode(LineDataSet.Mode.CUBIC_BEZIER)
 
 
 		val entriesSecond: ArrayList<Entry> = ArrayList()
-		entriesSecond.add(Entry(0.5f, 0f))
-		entriesSecond.add(Entry(2.5f, 2f))
-		entriesSecond.add(Entry(3.5f, 1f))
-		entriesSecond.add(Entry(3.6f, 2f))
+		entriesSecond.add(Entry(0f, 0f))
+		entriesSecond.add(Entry(1f, 2f))
+		entriesSecond.add(Entry(2f, 1f))
+		entriesSecond.add(Entry(3f, 2f))
 		entriesSecond.add(Entry(4f, 0.5f))
-		entriesSecond.add(Entry(5.1f, -0.5f))
+		entriesSecond.add(Entry(5f, 0f))
 
 
 		val datasetSecond = LineDataSet(entriesSecond, "График второй")
+		datasetSecond.setCircleColor(Color.BLACK)
+		datasetSecond.setMode(LineDataSet.Mode.CUBIC_BEZIER)
 
 
 		val dataSets: ArrayList<ILineDataSet> = ArrayList()
@@ -163,6 +161,7 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 
 		chart.data = data
 
+		chart.animateY(500);
 
 		chart.invalidate()
 

@@ -39,7 +39,8 @@ public class DataBase {
     @NotNull
     public static List<Substance> getListOfSubstances() {
         List<Substance> substances = new ArrayList<>();
-        substances.add(new Substance("Каменный уголь 5", "какое-то описание", R.drawable.test_photo, 5));
+        String desc1 = "Препарат предназначен для симптоматической терапии, уменьшения боли и воспаления на момент использования, на прогрессирование заболевания не влияет.";
+        substances.add(new Substance("Нимесулид", desc1, R.drawable.nayz, 5));
         substances.add(new Substance("Каменный уголь 6", "какое-то описание", R.drawable.test_photo, 6));
         substances.add(new Substance("Каменный уголь 7", "какое-то описание", R.drawable.test_photo, 7));
         substances.add(new Substance("Каменный уголь 8", "какое-то описание", R.drawable.test_photo, 8));
@@ -69,7 +70,8 @@ public class DataBase {
 
     public static ArrayList<Substance> getMainSubstanceBase() {
         ArrayList<Substance> products = new ArrayList<>();
-        products.add(new Substance("Каменный уголь 0", "какое-то описание", R.drawable.test_photo, 0));
+        String desc1 = "Препарат предназначен для симптоматической терапии, уменьшения боли и воспаления на момент использования, на прогрессирование заболевания не влияет.";
+        products.add(new Substance("Нимесулид", desc1, R.drawable.nayz, 0));
         products.add(new Substance("Каменный уголь 1", "какое-то описание", R.drawable.test_photo, 1));
         products.add(new Substance("Каменный уголь 2", "какое-то описание", R.drawable.test_photo, 2));
         products.add(new Substance("Каменный уголь 3", "какое-то описание", R.drawable.test_photo, 3));

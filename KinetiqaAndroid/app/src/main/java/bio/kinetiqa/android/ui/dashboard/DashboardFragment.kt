@@ -1,6 +1,5 @@
 package bio.kinetiqa.android.ui.dashboard
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -9,14 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.Button
 import android.widget.ListView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import bio.kinetiqa.android.*
 import bio.kinetiqa.android.databinding.FragmentDashboardBinding
+import com.github.mikephil.charting.charts.Chart.LOG_TAG
 
 
 class DashboardFragment : Fragment() {
@@ -63,20 +62,24 @@ class DashboardFragment : Fragment() {
 		val context : Context? = this.context
 		if (!isAdded) { Log.e("check_activity", "WTF why everything is not working") }
 		val substAdapter = SubstanceAdapter(activity, R.layout.list_item, substances)
-		subList.adapter = substAdapter
 
-		/// TODO: вероятно поп-ап с подробным окном лекарства
+		// TODO: вероятно поп-ап с подробным окном лекарства
+		// 1 variant
 		val itemListener =
 			AdapterView.OnItemClickListener { parent, v, position, id -> // получаем выбранный пункт
-				val selectedState: Substance =
-					parent.getItemAtPosition(position) as Substance
-				Toast.makeText(
-					activity?.applicationContext, "Был выбран пункт " + selectedState.name,
-					Toast.LENGTH_SHORT
-				).show()
+				val graphIntent = Intent(context, GraphInfoActivity::class.java)
+				startActivity(graphIntent)
 			}
-		subList.setOnItemClickListener(itemListener)
-		///
+		//subList.onItemClickListener = itemListener
+		// 2 variant
+		subList.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+			val graphIntent = Intent(context, GraphInfoActivity::class.java)
+			startActivity(graphIntent)
+		})
+
+		subList.adapter = substAdapter
+
+		//
 
 		add_substance = root.findViewById(R.id.button_add_substance)
 	}

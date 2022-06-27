@@ -29,11 +29,13 @@ public class GraphInfoAdapter extends ArrayAdapter<Substance> {
 
         ImageView flagView = view.findViewById(R.id.addPhoto);
         TextView nameView = view.findViewById(R.id.addName);
+        TextView descriptionView = view.findViewById(R.id.graphDescription);
 
         Substance state = states.get(position);
 
         flagView.setImageResource(state.getImageResource());
         nameView.setText(state.getName());
+        descriptionView.setText(state.getDescription());
 
         Switch graphSwitch = view.findViewById(R.id.addSwitch);
         graphSwitch.setChecked(DataBase.graphStatus(state.getResourceID()));

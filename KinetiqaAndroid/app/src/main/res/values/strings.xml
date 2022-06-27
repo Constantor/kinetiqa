@@ -26,4 +26,6 @@
     <string name="name">Name</string>
     <string name="configure">Configure</string>
     <string name="apply">Apply</string>
+    <string name="listName">Название</string>
+    <string name="listDesc">Описание</string>
 </resources>
