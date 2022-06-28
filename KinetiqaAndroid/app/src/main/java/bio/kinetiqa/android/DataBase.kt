@@ -105,7 +105,6 @@ class DataBase {
             return notifyStatus
         }
 
-
         fun addNotificationToBase(state: Substance) {
             notifyStatus[state.resourceID] = false
             runBlocking {
@@ -124,7 +123,6 @@ class DataBase {
                 }
             }
         }
-
 
         fun deleteNotificationFromBase(state: Substance) {
             notifyStatus[state.resourceID] = true
@@ -311,13 +309,6 @@ class DataBase {
 
         fun getSubstanceFromId(subID: Int): Substance {
             return Substance(substances[subID]!!)
-        }
-
-        private fun getGraphInfo(): Set<Int>? {
-            val graphInfo: MutableSet<Int> = java.util.HashSet()
-            graphInfo.add(6)
-            graphInfo.add(7)
-            return graphInfo
         }
     }
 }

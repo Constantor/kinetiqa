@@ -101,8 +101,6 @@ class DashboardFragment : Fragment() {
 
 	private fun updateNewList(root: View) {
 		setSubstData()
-		val desc1 = "Ибупрофен применяется как обезболивающее и противовоспалительное средство при лечении ревматоидного артрита, анкилозирующего спондилита, остеоартроза и других неревматоидных артропатий."
-		substances.add(Substance("Нурофен", desc1, R.drawable.nurofen, 5))
 		subList = root.findViewById(R.id.subList)
 		val context : Context? = this.context
 		if (!isAdded) { Log.e("check_activity", "WTF why everything is not working") }
