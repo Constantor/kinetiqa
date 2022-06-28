@@ -20,7 +20,7 @@ import java.security.SecureRandom
 import java.time.LocalDateTime
 import javax.net.ssl.SSLContext
 
-class SessionExpiredException(): HttpException("Session expired, please log in")
+class SessionExpiredException: HttpException("Session expired, please log in")
 
 class DataBase {
     companion object Methods {
