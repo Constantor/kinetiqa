@@ -1,6 +1,7 @@
 package bio.kinetiqa.android
 
 import TrustAllX509TrustManager
+import android.os.Environment
 import bio.kinetiqa.android.model.db.entites.Drug
 import com.github.mikephil.charting.data.Entry
 import io.ktor.client.*
@@ -13,14 +14,26 @@ import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
 import io.ktor.serialization.jackson.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.future.future
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
+import java.net.HttpURLConnection
+import java.net.URL
 import java.security.SecureRandom
+import java.time.LocalDateTime
+import java.util.concurrent.CompletableFuture
+import javax.net.ssl.HttpsURLConnection
 import javax.net.ssl.SSLContext
 
 
 class DataBase {
     companion object Methods {
-        val client = HttpClient(Apache) {
+        private val client = HttpClient(Apache) {
             engine {
                 sslContext = SSLContext.getInstance("TLS")
                     .apply {
@@ -37,13 +50,36 @@ class DataBase {
             install(ContentNegotiation) {
                 jackson()
             }
-            install(Logging)
         }
-        var SessionId = "ba1d349a18b792d44d0377d5f0f60417/13314a53504e4bde2ba75aef1f927a6d7496a084c6a8fecf8619dc8e948c94f9"
-        //TODO
-        var graphInfoID: MutableSet<Int> = HashSet()
+
+        private lateinit var substances: HashMap<Int, Drug>
+        private var lastUpdated: LocalDateTime = LocalDateTime.MIN
+        private var userSession =
+            "a62376260425680072af1384a84aeb89/47edc71d6e70c087f496b08c2772f3b1f5a3660d61284ad854e65a8e36e34d0826f4c1e86a617b12362d3a0b2a40ad842aff8e084b5d52032a4f154207187d46ac329969800a0245833cc1f9cc91e334:6925232e3f4b2ab63e335c79d03b8d278bcc3e633d2d9a4ceb8db9f9d9d7ecc6"
+        private const val userSessionHeaderName = "user_session"
+        private var graphInfoID: MutableSet<Int> = HashSet()
+
         @JvmField
         var notifyStatus = getNotifications()
+
+        private fun needToUpdate(): Boolean {
+            return lastUpdated.plusDays(1).isBefore(LocalDateTime.now())
+        }
+
+        private fun updateSubstances() {
+            runBlocking {
+                val response: List<Drug> = client.get {
+                    url {
+                        path("drugs.list")
+                    }
+                }.body()
+                substances = HashMap()
+                for (drug in response) {
+                    substances[drug.id] = drug
+                }
+            }
+            lastUpdated = LocalDateTime.now()
+        }
 
         fun getNotifications(): HashMap<Int, Boolean> {
             return HashMap()
@@ -61,48 +97,63 @@ class DataBase {
         } // Удалить нотификацию для данного вещества.
 
 
-        fun addSubstanceToBase(state: Substance?) {
-            //TODO
-        } // Вся информация про лекарство в класс state. Добавить вещество пользователю
+        fun addSubstanceToBase(state: Substance) {
+            runBlocking {
+                client.post {
+                    url {
+                        path("courses.add")
+                    }
+                    headers.append(userSessionHeaderName, userSession)
+                    setBody(FormDataContent(
+                        Parameters.build {
+                            append("drug_id", state.resourceID.toString())
+                        }
+                    ))
+                }
+            }
+        }
 
-
-        fun deleteSubstanceFromBase(state: Substance?) {
-            //TODO
-        } // Удалить лекарство для пользователя
-
+        fun deleteSubstanceFromBase(state: Substance) {
+            runBlocking {
+                client.post {
+                    url {
+                        path("courses.delete")
+                    }
+                    headers.append(userSessionHeaderName, userSession)
+                    setBody(FormDataContent(
+                        Parameters.build {
+                            append("drug_id", state.resourceID.toString())
+                        }
+                    ))
+                }
+            }
+        }
 
         fun getListOfSubstances(): MutableList<Substance> {
-            val substances: MutableList<Substance> = ArrayList()
-            val desc1 =
-                "Препарат предназначен для симптоматической терапии, уменьшения боли и воспаления на момент использования, на прогрессирование заболевания не влияет."
-            substances.add(Substance("Нимесулид", desc1, R.drawable.nayz, 5))
-            substances.add(
-                Substance(
-                    "Каменный уголь 6",
-                    "какое-то описание",
-                    R.drawable.test_photo,
-                    6
-                )
-            )
-            substances.add(
-                Substance(
-                    "Каменный уголь 7",
-                    "какое-то описание",
-                    R.drawable.test_photo,
-                    7
-                )
-            )
-            substances.add(
-                Substance(
-                    "Каменный уголь 8",
-                    "какое-то описание",
-                    R.drawable.test_photo,
-                    8
-                )
-            )
-            return substances
-            //TODO
-        } // Вернуть список всех лекарств пользователя. Как создавать Объект класса Substance видно
+            val userSubstances: MutableList<Substance> = ArrayList()
+            runBlocking {
+                val drugIds: List<Int> = client.get {
+                    url {
+                        path("courses.list")
+                    }
+                    headers.append(userSessionHeaderName, userSession)
+                }.body()
+                if (needToUpdate()) {
+                    updateSubstances()
+                } else {
+                    for (id in drugIds) {
+                        if (!substances.containsKey(id)) {
+                            updateSubstances()
+                            break
+                        }
+                    }
+                }
+                for (id in drugIds) {
+                    userSubstances.add(Substance(substances[id]!!))
+                }
+            }
+            return userSubstances
+        }
 
 
         fun getGraphLine(subId: Int): ArrayList<Entry> {
@@ -128,18 +179,14 @@ class DataBase {
 
         fun getMainSubstanceBase(): ArrayList<Substance> {
             val products = ArrayList<Substance>()
-            runBlocking {
-                val response: List<Drug> = client.get {
-                    url {
-                        path("drugs.list")
-                    }
-                }.body()
-                for(drug in response) {
-                    products.add(Substance(drug))
-                }
+            if (needToUpdate()) {
+                updateSubstances()
+            }
+            for (drug in substances.values) {
+                products.add(Substance(drug))
             }
             return products
-        } // Список лекарств, которые поддерживает наше приложение, и которые пользователь может добавить себе
+        }
 
 
         fun notificationStatus(resourceID: Int): Boolean {
@@ -156,32 +203,42 @@ class DataBase {
 
         fun signUp(email: String, password: String) {
             runBlocking {
-                val responce = client.submitForm {
+                val responce = client.post {
                     url {
                         path("sign.up")
                     }
-                    formData {
-                        append("email", email)
-                        append("password", password)
-                    }
+
+                    setBody(FormDataContent(
+                        Parameters.build {
+                            append("email", email)
+                            append("password", password)
+                        }
+                    ))
                 }
-                SessionId = responce.headers["session_id"]!!
+                userSession = responce.headers["session_id"]!!
             }
         }
 
-        fun login(email: String, password: String) {
+        fun signIn(email: String, password: String) {
             runBlocking {
-                val responce = client.submitForm {
+                val responce = client.post {
                     url {
                         path("sign.in")
                     }
-                    formData {
-                        append("email", email)
-                        append("password", password)
-                    }
+
+                    setBody(FormDataContent(
+                        Parameters.build {
+                            append("email", email)
+                            append("password", password)
+                        }
+                    ))
                 }
-                SessionId = responce.headers["session_id"]!!
+                userSession = responce.headers["session_id"]!!
             }
+        }
+
+        fun logout() {
+            userSession = ""
         }
     }
 }

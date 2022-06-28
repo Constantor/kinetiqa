@@ -1,5 +1,6 @@
 package bio.kinetiqa.android;
 
+import android.net.Uri;
 import android.widget.ArrayAdapter;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -32,8 +35,8 @@ public class AddSubstanceAdapter extends ArrayAdapter<Substance> {
         TextView capitalView = view.findViewById(R.id.addDescription);
 
         Substance state = states.get(position);
+        Glide.with(convertView).load(state.getImageResource()).placeholder(R.drawable.test_photo).into(flagView);
 
-        flagView.setImageResource(state.getImageResource());
         nameView.setText(state.getName());
         capitalView.setText(state.getDescription());
 
