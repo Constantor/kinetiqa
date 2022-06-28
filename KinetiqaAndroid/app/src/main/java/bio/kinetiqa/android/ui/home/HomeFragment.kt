@@ -76,7 +76,7 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 
 		apply = root.findViewById(R.id.applyButton)
 		apply.setOnClickListener {
-			addDataOnGraph()
+			addNextDataOnGraph()
 		}
 
 		return root
@@ -132,7 +132,7 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 		entriesFirst.add(Entry(5f, 4f))
 		entriesFirst.add(Entry(6f, 1f))
 
-		val datasetFirst = LineDataSet(entriesFirst, "График первый")
+		val datasetFirst = LineDataSet(entriesFirst, "Ингавирин")
 		datasetFirst.color = Color.RED;
 		datasetFirst.setCircleColor(Color.BLACK)
 		datasetFirst.setMode(LineDataSet.Mode.CUBIC_BEZIER)
@@ -147,7 +147,7 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 		entriesSecond.add(Entry(5f, 0f))
 
 
-		val datasetSecond = LineDataSet(entriesSecond, "График второй")
+		val datasetSecond = LineDataSet(entriesSecond, "Супрастин")
 		datasetSecond.setCircleColor(Color.BLACK)
 		datasetSecond.setMode(LineDataSet.Mode.CUBIC_BEZIER)
 
@@ -177,6 +177,63 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 		val getData = LineData(dataSet)
 		chart.data = getData
 		chart.invalidate()*/
+	}
+
+	private fun addNextDataOnGraph() {
+		val entriesFirst: ArrayList<Entry> = ArrayList()
+		entriesFirst.add(Entry(1f, 5f))
+		entriesFirst.add(Entry(2f, 2f))
+		entriesFirst.add(Entry(3f, 1f))
+		entriesFirst.add(Entry(4f, 0f))
+		entriesFirst.add(Entry(5f, 4f))
+		entriesFirst.add(Entry(6f, 1f))
+
+		val datasetFirst = LineDataSet(entriesFirst, "Ингавирин")
+		datasetFirst.color = Color.RED;
+		datasetFirst.setCircleColor(Color.BLACK)
+		datasetFirst.setMode(LineDataSet.Mode.CUBIC_BEZIER)
+
+
+		val entriesSecond: ArrayList<Entry> = ArrayList()
+		entriesSecond.add(Entry(0f, 0f))
+		entriesSecond.add(Entry(1f, 2f))
+		entriesSecond.add(Entry(2f, 1f))
+		entriesSecond.add(Entry(3f, 2f))
+		entriesSecond.add(Entry(4f, 0.5f))
+		entriesSecond.add(Entry(5f, 0f))
+
+
+		val datasetSecond = LineDataSet(entriesSecond, "Супрастин")
+		datasetSecond.setCircleColor(Color.BLACK)
+		datasetSecond.setMode(LineDataSet.Mode.CUBIC_BEZIER)
+
+		val entriesThird: ArrayList<Entry> = ArrayList()
+		entriesThird.add(Entry(1f, 1f))
+		entriesThird.add(Entry(2f, 2f))
+		entriesThird.add(Entry(3f, 2f))
+		entriesThird.add(Entry(4f, 3f))
+		entriesThird.add(Entry(5f, 4f))
+		entriesThird.add(Entry(6f, 6f))
+
+		val datasetThird = LineDataSet(entriesThird, "Нимесулид")
+		datasetThird.color = Color.MAGENTA;
+		datasetThird.setCircleColor(Color.BLACK)
+		datasetThird.setMode(LineDataSet.Mode.CUBIC_BEZIER)
+
+
+		val dataSets: ArrayList<ILineDataSet> = ArrayList()
+		dataSets.add(datasetFirst)
+		dataSets.add(datasetSecond)
+		dataSets.add(datasetThird)
+
+
+		val data = LineData(dataSets)
+
+		chart.data = data
+
+		chart.animateY(500);
+
+		chart.invalidate()
 	}
 
 	override fun onDestroyView() {

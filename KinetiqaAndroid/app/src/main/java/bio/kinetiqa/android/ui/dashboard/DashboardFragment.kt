@@ -9,13 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import bio.kinetiqa.android.*
 import bio.kinetiqa.android.databinding.FragmentDashboardBinding
-import com.github.mikephil.charting.charts.Chart.LOG_TAG
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class DashboardFragment : Fragment() {
@@ -42,7 +44,8 @@ class DashboardFragment : Fragment() {
 		val root: View = binding.root
 
 		//val view: View = inflater.inflate(R.layout.fragment_dashboard, container, false)
-		updateList(root);
+
+		updateList(root)
 
 		return root
 	}
@@ -67,6 +70,48 @@ class DashboardFragment : Fragment() {
 		// 1 variant
 		val itemListener =
 			AdapterView.OnItemClickListener { parent, v, position, id -> // получаем выбранный пункт
+				updateNewList(root)
+			}
+		subList.onItemClickListener = itemListener
+		// 2 variant
+		//TODO
+/*		subList.onItemClickListener =
+			OnItemClickListener { parent, v, position, id -> // по позиции получаем выбранный элемент
+				updateNewList(root)
+			}*/
+		//TODO
+
+		subList.adapter = substAdapter
+
+		//
+
+		val xe: FloatingActionButton = root.findViewById(R.id.floatingActionButton2)
+		xe.setOnClickListener {
+			updateNewList(root)
+			val addIntent = Intent(context, AddSubActivity::class.java)
+			startActivity(addIntent)
+		}
+/*		add_substance = root.findViewById(R.id.button_add_substance)
+		add_substance.setOnClickListener {
+			updateNewList(root)
+			val addIntent = Intent(context, AddSubActivity::class.java)
+			startActivity(addIntent)
+		}*/
+	}
+
+	private fun updateNewList(root: View) {
+		setSubstData()
+		val desc1 = "Ибупрофен применяется как обезболивающее и противовоспалительное средство при лечении ревматоидного артрита, анкилозирующего спондилита, остеоартроза и других неревматоидных артропатий."
+		substances.add(Substance("Нурофен", desc1, R.drawable.nurofen, 5))
+		subList = root.findViewById(R.id.subList)
+		val context : Context? = this.context
+		if (!isAdded) { Log.e("check_activity", "WTF why everything is not working") }
+		val substAdapter = SubstanceAdapter(activity, R.layout.list_item, substances)
+
+		// TODO: вероятно поп-ап с подробным окном лекарства
+		// 1 variant
+		val itemListener =
+			AdapterView.OnItemClickListener { parent, v, position, id -> // получаем выбранный пункт
 				val graphIntent = Intent(context, GraphInfoActivity::class.java)
 				startActivity(graphIntent)
 			}
@@ -78,9 +123,5 @@ class DashboardFragment : Fragment() {
 		})
 
 		subList.adapter = substAdapter
-
-		//
-
-		add_substance = root.findViewById(R.id.button_add_substance)
 	}
 }

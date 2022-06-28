@@ -9,6 +9,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:fontFamily="@font/alice"
+        android:text="@string/hello_blank_fragment"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="Kinetiqa — это приложение для Android, написанное на Kotlin, позволяющее удобно вести учёт приёма биологически активных веществ (далее — БАВ), в том числе лекарственных средств, с точностью до минуты. В Kinetiqa позволяет создать расписание приёма веществ, согласно предписаниям, выданным врачом. Приложение на основе этого расписания позволяет давать напоминания о необходимости приёма препарата с уточнением его наименования и предписанной дозировки. " />
 
 </FrameLayout>
