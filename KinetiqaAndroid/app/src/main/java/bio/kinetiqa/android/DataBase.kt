@@ -94,12 +94,13 @@ class DataBase {
             notifyStatus = HashMap()
             runBlocking {
                 launch {
-                    notifyStatus = client.get {
+                    val raw: Map<Int, Boolean> = client.get {
                         url {
                             path("notifications.list")
                         }
                         headers.append(userSessionHeaderName, userSession)
                     }.body()
+                    notifyStatus = HashMap(raw)
                 }
             }
             return notifyStatus
