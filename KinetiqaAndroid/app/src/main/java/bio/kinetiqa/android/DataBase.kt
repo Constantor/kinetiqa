@@ -66,7 +66,6 @@ class DataBase {
                 launch { updateSubstances() }
                 launch { getNotifications() }
             }
-
         }
 
         private fun needToUpdate(): Boolean {
@@ -146,8 +145,7 @@ class DataBase {
             }
         }
 
-
-        fun addSubstanceToBase(state: Substance) {
+        fun addUserSubstance(state: Substance) {
             runBlocking {
                 launch {
                     client.post {
@@ -165,7 +163,7 @@ class DataBase {
             }
         }
 
-        fun deleteSubstanceFromBase(state: Substance) {
+        fun deleteUserSubstance(state: Substance) {
             runBlocking {
                 launch {
                     client.post {
@@ -253,7 +251,7 @@ class DataBase {
             return graphInfoID.contains(resourceId)
         }
 
-        fun takingMedication(resourceId: Int) {
+        fun addTakeMedicine(state: Substance) {
             runBlocking {
                 launch {
                     client.post {
@@ -263,7 +261,7 @@ class DataBase {
                         headers.append(userSessionHeaderName, userSession)
                         setBody(FormDataContent(
                             Parameters.build {
-                                append("drug_id", resourceId.toString())
+                                append("drug_id", state.resourceID.toString())
                             }
                         ))
                     }
@@ -309,6 +307,17 @@ class DataBase {
 
         fun logout() {
             userSession = ""
+        }
+
+        fun getSubstanceFromId(subID: Int): Substance {
+            return Substance(substances[subID]!!)
+        }
+
+        private fun getGraphInfo(): Set<Int>? {
+            val graphInfo: MutableSet<Int> = java.util.HashSet()
+            graphInfo.add(6)
+            graphInfo.add(7)
+            return graphInfo
         }
     }
 }

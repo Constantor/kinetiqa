@@ -34,6 +34,7 @@ public class SubstanceAdapter extends ArrayAdapter<Substance> {
         this.layout = resource;
         this.inflater = LayoutInflater.from(context);
     }
+
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View view = inflater.inflate(this.layout, parent, false);
@@ -43,9 +44,8 @@ public class SubstanceAdapter extends ArrayAdapter<Substance> {
         TextView capitalView = view.findViewById(R.id.description);
 
         Substance state = states.get(position);
-        Glide.with(view).load(state.getImageResource()).placeholder(R.drawable.test_photo).into(flagView);
+        Glide.with(view).load(state.getImageResource()).placeholder(R.drawable.fluoxetin).into(flagView);
 
-        flagView.setImageURI(Uri.parse(state.getImageResource()));
         nameView.setText(state.getName());
         capitalView.setText(state.getDescription());
         //imageView.setImageResource(state.getImageResource());
@@ -62,14 +62,14 @@ public class SubstanceAdapter extends ArrayAdapter<Substance> {
         Switch NotifySwitch = view.findViewById(R.id.notification_switch);
         NotifySwitch.setChecked(DataBase.Methods.notificationStatus(state.getResourceID()));
         NotifySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-            DataBase.Methods.addNotificationToBase(state);
-        } else {
-            DataBase.Methods.deleteNotificationFromBase(state);
-        }
-    }
-});
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    DataBase.Methods.addNotificationToBase(state);
+                } else {
+                    DataBase.Methods.deleteNotificationFromBase(state);
+                }
+            }
+        });
 
         return view;
     }

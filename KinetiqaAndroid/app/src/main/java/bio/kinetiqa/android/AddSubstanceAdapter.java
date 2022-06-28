@@ -1,6 +1,5 @@
 package bio.kinetiqa.android;
 
-import android.net.Uri;
 import android.widget.ArrayAdapter;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,9 +15,9 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 public class AddSubstanceAdapter extends ArrayAdapter<Substance> {
-    private LayoutInflater inflater;
-    private int layout;
-    private List<Substance> states;
+    private final LayoutInflater inflater;
+    private final int layout;
+    private final List<Substance> states;
 
     public AddSubstanceAdapter(Context context, int resource, List<Substance> states) {
         super(context, resource, states);
@@ -44,9 +43,9 @@ public class AddSubstanceAdapter extends ArrayAdapter<Substance> {
         addSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    DataBase.Methods.addSubstanceToBase(state);
+                    DataBase.Methods.addUserSubstance(state);
                 } else {
-                    DataBase.Methods.deleteSubstanceFromBase(state);
+                    DataBase.Methods.deleteUserSubstance(state);
                 }
             }
         });

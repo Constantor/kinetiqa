@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 public class DescriptionActivity extends AppCompatActivity {
 
     private Substance substance;
@@ -18,28 +20,26 @@ public class DescriptionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_description);
 
         int subID = (int) getIntent().getSerializableExtra("state");
-        substance = DataBase.getSubstanceFromId(subID);
+        substance = DataBase.Methods.getSubstanceFromId(subID);
 
         ImageView flagView = findViewById(R.id.photo);
         TextView nameView = findViewById(R.id.nameDesc);
         TextView capitalView = findViewById(R.id.longDescription);
 
-        flagView.setImageResource(substance.getImageResource());
+        Glide.with(this).load(DataBase.Methods.getSubstanceFromId(subID).getImageResource()).placeholder(R.drawable.fluoxetin).into(flagView);
         nameView.setText(substance.getName());
         capitalView.setText(substance.getDescription());
-
-
     }
 
     public void addMedicine(View view) {
         Toast toast = Toast.makeText(getApplicationContext(),
                 "Запись о приёме добавлена", Toast.LENGTH_SHORT);
         toast.show();
-        DataBase.addTakeMedicine(substance);
+        DataBase.Methods.addTakeMedicine(substance);
     }
 
     public void deleteSubstance(View view) {
-        DataBase.deleteUserSubstance(substance);
+        DataBase.Methods.deleteUserSubstance(substance);
         finish();
     }
 }
