@@ -35,7 +35,7 @@ public class GraphInfoAdapter extends ArrayAdapter<Substance> {
         TextView descriptionView = view.findViewById(R.id.graphDescription);
 
         Substance state = states.get(position);
-        Glide.with(convertView).load(state.getImageResource()).placeholder(R.drawable.test_photo).into(flagView);
+        Glide.with(view).load(state.getImageResource()).placeholder(R.drawable.test_photo).into(flagView);
 
         nameView.setText(state.getName());
         descriptionView.setText(state.getDescription());

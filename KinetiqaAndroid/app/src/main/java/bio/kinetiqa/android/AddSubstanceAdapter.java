@@ -35,7 +35,7 @@ public class AddSubstanceAdapter extends ArrayAdapter<Substance> {
         TextView capitalView = view.findViewById(R.id.addDescription);
 
         Substance state = states.get(position);
-        Glide.with(convertView).load(state.getImageResource()).placeholder(R.drawable.test_photo).into(flagView);
+        Glide.with(view).load(state.getImageResource()).placeholder(R.drawable.test_photo).into(flagView);
 
         nameView.setText(state.getName());
         capitalView.setText(state.getDescription());
