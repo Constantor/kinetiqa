@@ -62,7 +62,7 @@ fun Route.drugsRouting() {
                     val params = call.receiveParameters()
                     val curDrugId = params["drug_id"]!!.toInt()
                     out = transaction {
-                        Intakes.select((Courses.userId eq curUserId) and (Courses.drugId eq curDrugId))
+                        Intakes.select((Intakes.userId eq curUserId) and (Intakes.drugId eq curDrugId))
                             .orderBy(Intakes.timeWhen to SortOrder.ASC)
                             .map { row -> Intake.wrapRow(row) }.filter { intake ->
                                 intake.timeWhen.isAfter(
