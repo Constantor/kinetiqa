@@ -15,7 +15,7 @@ public class GraphInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_info);
 
-        ArrayList<Substance> products = (ArrayList<Substance>) DataBase.getListOfSubstances();
+        ArrayList<Substance> products = (ArrayList<Substance>) DataBase.Methods.getListOfSubstances();
         ListView productList = findViewById(R.id.addSubList);
         GraphInfoAdapter adapter = new GraphInfoAdapter(this, R.layout.graph_info_elem, products);
         productList.setAdapter(adapter);

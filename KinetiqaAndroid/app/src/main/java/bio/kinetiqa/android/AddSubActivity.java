@@ -21,7 +21,7 @@ public class AddSubActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_sub);
 
         ArrayList<Substance> products;
-        products = DataBase.getMainSubstanceBase();
+        products = DataBase.Methods.getMainSubstanceBase();
         ListView productList = findViewById(R.id.addSubList);
         AddSubstanceAdapter adapter = new AddSubstanceAdapter(this, R.layout.add_sub_item, products);
         productList.setAdapter(adapter);

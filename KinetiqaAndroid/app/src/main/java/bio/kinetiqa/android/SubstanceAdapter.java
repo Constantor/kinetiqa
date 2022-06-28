@@ -39,14 +39,14 @@ public class SubstanceAdapter extends ArrayAdapter<Substance> {
         capitalView.setText(state.getDescription());
 
         Switch NotifySwitch = view.findViewById(R.id.notification_switch);
-        NotifySwitch.setChecked(DataBase.notificationStatus(state.getResourceID()));
+        NotifySwitch.setChecked(DataBase.Methods.notificationStatus(state.getResourceID()));
         NotifySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
-            DataBase.addNotificationToBase(state);
+            DataBase.Methods.addNotificationToBase(state);
             DataBase.notifyStatus.put(state.getResourceID(), true);
         } else {
-            DataBase.deleteNotificationFromBase(state);
+            DataBase.Methods.deleteNotificationFromBase(state);
             DataBase.notifyStatus.put(state.getResourceID(), false);
         }
     }

@@ -38,13 +38,13 @@ public class GraphInfoAdapter extends ArrayAdapter<Substance> {
         descriptionView.setText(state.getDescription());
 
         Switch graphSwitch = view.findViewById(R.id.addSwitch);
-        graphSwitch.setChecked(DataBase.graphStatus(state.getResourceID()));
+        graphSwitch.setChecked(DataBase.Methods.graphStatus(state.getResourceID()));
         graphSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    DataBase.addSubstanceOnGraph(state);
+                    DataBase.Methods.addSubstanceOnGraph(state);
                 } else {
-                    DataBase.deleteSubstanceFromGraph(state);
+                    DataBase.Methods.deleteSubstanceFromGraph(state);
                 }
             }
         });

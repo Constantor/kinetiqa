@@ -41,9 +41,9 @@ public class AddSubstanceAdapter extends ArrayAdapter<Substance> {
         addSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    DataBase.addSubstanceToBase(state);
+                    DataBase.Methods.addSubstanceToBase(state);
                 } else {
-                    DataBase.deleteSubstanceFromBase(state);
+                    DataBase.Methods.deleteSubstanceFromBase(state);
                 }
             }
         });
