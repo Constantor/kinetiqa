@@ -7,6 +7,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
 import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.id.EntityID
+import java.time.Instant
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.memberProperties
 
@@ -28,6 +29,11 @@ fun Application.configureSerialization() {
                 JsonSerializer<EntityID<*>> { src, _, context ->
                     context.serialize(src::class.memberProperties.find { it.name == "value" }!!.getter.call(src))
                 }
+            val instantSerializer: JsonSerializer<Instant> =
+                JsonSerializer<Instant> { src, _, context ->
+                    context.serialize(src.toString())
+                }
+            registerTypeAdapter(Instant::class.java, instantSerializer)
             registerTypeHierarchyAdapter(Entity::class.java, entitySerializer)
             registerTypeHierarchyAdapter(EntityID::class.java, entityIdSerializer)
         }
