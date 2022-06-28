@@ -49,10 +49,8 @@ public class SubstanceAdapter extends ArrayAdapter<Substance> {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
             DataBase.Methods.addNotificationToBase(state);
-            DataBase.notifyStatus.put(state.getResourceID(), true);
         } else {
             DataBase.Methods.deleteNotificationFromBase(state);
-            DataBase.notifyStatus.put(state.getResourceID(), false);
         }
     }
 });
