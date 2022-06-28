@@ -1,5 +1,6 @@
 package bio.kinetiqa.android;
 
+import android.net.Uri;
 import android.content.Intent;
 import android.provider.ContactsContract;
 import android.widget.ArrayAdapter;
@@ -13,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import java.net.URI;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +43,9 @@ public class SubstanceAdapter extends ArrayAdapter<Substance> {
         TextView capitalView = view.findViewById(R.id.description);
 
         Substance state = states.get(position);
+        Glide.with(view).load(state.getImageResource()).placeholder(R.drawable.test_photo).into(flagView);
 
-        flagView.setImageResource(state.getImageResource());
+        flagView.setImageURI(Uri.parse(state.getImageResource()));
         nameView.setText(state.getName());
         capitalView.setText(state.getDescription());
         //imageView.setImageResource(state.getImageResource());
@@ -55,15 +60,13 @@ public class SubstanceAdapter extends ArrayAdapter<Substance> {
         });
 
         Switch NotifySwitch = view.findViewById(R.id.notification_switch);
-        NotifySwitch.setChecked(DataBase.notificationStatus(state.getResourceID()));
+        NotifySwitch.setChecked(DataBase.Methods.notificationStatus(state.getResourceID()));
         NotifySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
-            DataBase.addNotificationToBase(state);
-            DataBase.notifyStatus.put(state.getResourceID(), true);
+            DataBase.Methods.addNotificationToBase(state);
         } else {
-            DataBase.deleteNotificationFromBase(state);
-            DataBase.notifyStatus.put(state.getResourceID(), false);
+            DataBase.Methods.deleteNotificationFromBase(state);
         }
     }
 });

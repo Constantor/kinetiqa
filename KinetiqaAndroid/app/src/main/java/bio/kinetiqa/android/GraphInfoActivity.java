@@ -15,9 +15,7 @@ public class GraphInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_info);
 
-        ArrayList<Substance> products = (ArrayList<Substance>) DataBase.getListOfSubstances();
-        String desc1 = "Ибупрофен применяется как обезболивающее и противовоспалительное средство при лечении ревматоидного артрита, анкилозирующего спондилита, остеоартроза и других неревматоидных артропатий.";
-        products.add(new Substance("Нурофен", desc1, R.drawable.nurofen, 5));
+        ArrayList<Substance> products = (ArrayList<Substance>) DataBase.Methods.getListOfSubstances();
         ListView productList = findViewById(R.id.addSubList);
         GraphInfoAdapter adapter = new GraphInfoAdapter(this, R.layout.graph_info_elem, products);
         productList.setAdapter(adapter);

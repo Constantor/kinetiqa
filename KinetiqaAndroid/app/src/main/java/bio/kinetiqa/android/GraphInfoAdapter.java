@@ -1,5 +1,6 @@
 package bio.kinetiqa.android;
 
+import android.net.Uri;
 import android.widget.ArrayAdapter;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -32,19 +35,19 @@ public class GraphInfoAdapter extends ArrayAdapter<Substance> {
         TextView descriptionView = view.findViewById(R.id.graphDescription);
 
         Substance state = states.get(position);
+        Glide.with(view).load(state.getImageResource()).placeholder(R.drawable.test_photo).into(flagView);
 
-        flagView.setImageResource(state.getImageResource());
         nameView.setText(state.getName());
         descriptionView.setText(state.getDescription());
 
         Switch graphSwitch = view.findViewById(R.id.addSwitch);
-        graphSwitch.setChecked(DataBase.graphStatus(state.getResourceID()));
+        graphSwitch.setChecked(DataBase.Methods.graphStatus(state.getResourceID()));
         graphSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    DataBase.addSubstanceOnGraph(state);
+                    DataBase.Methods.addSubstanceOnGraph(state);
                 } else {
-                    DataBase.deleteSubstanceFromGraph(state);
+                    DataBase.Methods.deleteSubstanceFromGraph(state);
                 }
             }
         });
