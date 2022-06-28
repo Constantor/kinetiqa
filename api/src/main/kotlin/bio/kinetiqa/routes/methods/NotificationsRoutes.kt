@@ -42,7 +42,6 @@ fun Route.notificationsRouting() {
                     }
                 } catch (e: NullPointerException) {
                     call.respond(HttpStatusCode.BadRequest, "Invalid request parameters")
-                    println("No drug_id parameter")
                     return@post
                 }
                 call.respond(HttpStatusCode.OK, "Notification add successful")
@@ -60,7 +59,6 @@ fun Route.notificationsRouting() {
                     }
                 } catch (e: NullPointerException) {
                     call.respond(HttpStatusCode.BadRequest, "Invalid request parameters")
-                    println("No drug_id parameter")
                     return@post
                 }
                 call.respond(HttpStatusCode.OK, "Notification delete successful")
