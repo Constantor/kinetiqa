@@ -152,6 +152,8 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
             val dataset = LineDataSet(entries, DataBase.getSubstanceFromId(id).name)
             dataset.color = col
             dataset.setDrawCircles(false)
+			dataset.lineWidth = 3f
+			dataset.valueTextColor = Color.TRANSPARENT
             dataSet.add(dataset)
         }
         maxY *= 1.5f

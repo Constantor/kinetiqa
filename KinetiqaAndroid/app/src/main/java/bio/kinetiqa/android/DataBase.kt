@@ -233,7 +233,7 @@ class DataBase {
                 object : TypeReference<Map<String, Long>>() {})
             val tmax = map["T_max"]!!
             val thalf = map["T_1/2"]!!
-            val step = 30.0
+            val step = 10.0
             var curTime = LocalDateTime.now().minusWeeks(3).toEpochSecond(ZoneOffset.UTC) / 60.0
             val begTime = LocalDateTime.now().minusHours(18).toEpochSecond(ZoneOffset.UTC) / 60.0 - curTime
             val endTime = LocalDateTime.now().plusHours(18).toEpochSecond(ZoneOffset.UTC) / 60.0 - curTime
