@@ -2,6 +2,9 @@ package bio.kinetiqa.android
 
 import TrustAllX509TrustManager
 import bio.kinetiqa.android.model.db.entites.Drug
+import bio.kinetiqa.android.model.db.entites.Intake
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.mikephil.charting.data.Entry
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -18,9 +21,11 @@ import kotlinx.coroutines.runBlocking
 import org.apache.http.HttpException
 import java.security.SecureRandom
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 import javax.net.ssl.SSLContext
+import kotlin.math.pow
 
-class SessionExpiredException: HttpException("Session expired, please log in")
+class SessionExpiredException : HttpException("Session expired, please log in")
 
 class DataBase {
     companion object Methods {
@@ -39,12 +44,14 @@ class DataBase {
                 }
             }
             install(ContentNegotiation) {
-                jackson()
+                jackson {
+                    findAndRegisterModules()
+                }
             }
             HttpResponseValidator {
                 validateResponse { response ->
-                    if(response.status != HttpStatusCode.OK) {
-                        if(response.status == HttpStatusCode.Unauthorized) {
+                    if (response.status != HttpStatusCode.OK) {
+                        if (response.status == HttpStatusCode.Unauthorized) {
                             throw SessionExpiredException()
                         }
                         throw HttpException("Couldn't reach server")
@@ -205,19 +212,72 @@ class DataBase {
             return userSubstances
         }
 
-
         fun getGraphLine(subId: Int): ArrayList<Entry> {
+            val intakes: List<Intake>
+            runBlocking {
+                intakes = client.get {
+                    url {
+                        path("intakes.list")
+                    }
+                    headers.append(userSessionHeaderName, userSession)
+                    setBody(FormDataContent(
+                        Parameters.build {
+                            append("drug_id", subId.toString())
+                        }
+                    ))
+                }.body()
+            }
+            val drug = substances[subId]!!
+            val map: Map<String, Long> = ObjectMapper().readValue(
+                drug.kineticsPlot,
+                object : TypeReference<Map<String, Long>>() {})
+            val tmax = map["T_max"]!!
+            val thalf = map["T_1/2"]!!
+            val step = 30.0
+            var curTime = LocalDateTime.now().minusWeeks(3).toEpochSecond(ZoneOffset.UTC) / 60.0
+            val begTime = LocalDateTime.now().minusHours(18).toEpochSecond(ZoneOffset.UTC) / 60.0 - curTime
+            val endTime = LocalDateTime.now().plusHours(18).toEpochSecond(ZoneOffset.UTC) / 60.0 - curTime
+            val stamps = ArrayList<Pair<Double, Double>>()
+            for (i in intakes) {
+                stamps.add(
+                    Pair(
+                        i.massIntookMg.toDouble() / drug.standardDosageMG.toDouble(),
+                        i.timeWhen.epochSecond / 60 + tmax - curTime
+                    )
+                )
+            }
             val entries = ArrayList<Entry>()
-            entries.add(Entry(1f, 5f))
-            entries.add(Entry(2f, 2f))
-            entries.add(Entry(3f, 1f))
-            entries.add(Entry(4f, -3f))
-            entries.add(Entry(5f, 4f))
-            entries.add(Entry(6f, 1f))
+            if (stamps.isEmpty())
+                return entries
+            var ind = 0
+            var sum = 0.0
+            curTime = 0.0
+            while (curTime < endTime) {
+                var next = curTime
+                if(curTime < begTime) {
+                    next += step * 10
+                } else {
+                    next += step
+                }
+                var add = 0.0
+                if(ind < stamps.size && next > stamps[ind].second) {
+                    next = stamps[ind].second
+                    add = stamps[ind].first
+                    ind += 1
+                }
+                sum /= 2.0.pow((next - curTime) / thalf)
+                sum += add
+                if(curTime >= begTime) {
+                    entries.add(Entry(((curTime - begTime) / (60 * 24)).toFloat(), sum.toFloat()))
+                }
+                curTime = next
+            }
             return entries
-            //TODO
-        } // по id лекарства получить список точек графика приема - координат графика - (ось X, ось Y)
+        }
 
+        fun getGraphInfoId(): MutableSet<Int> {
+            return graphInfoID
+        }
 
         fun addSubstanceOnGraph(state: Substance) {
             graphInfoID.add(state.resourceID)

@@ -11,12 +11,12 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import bio.kinetiqa.android.DataBase
 import bio.kinetiqa.android.GraphInfoActivity
 import bio.kinetiqa.android.R
 import bio.kinetiqa.android.databinding.FragmentHomeBinding
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -26,6 +26,9 @@ import com.github.mikephil.charting.listener.ChartTouchListener.ChartGesture
 import com.github.mikephil.charting.listener.OnChartGestureListener
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
+import java.lang.Float.max
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomeFragment : Fragment(), OnSeekBarChangeListener,
@@ -76,7 +79,7 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 
 		apply = root.findViewById(R.id.applyButton)
 		apply.setOnClickListener {
-			addNextDataOnGraph()
+			addDataOnGraph()
 		}
 
 		return root
@@ -122,119 +125,42 @@ class HomeFragment : Fragment(), OnSeekBarChangeListener,
 		//TODO
 	}
 
-	private fun addDataOnGraph() {
-		//TODO Change on normal
-		val entriesFirst: ArrayList<Entry> = ArrayList()
-		entriesFirst.add(Entry(1f, 5f))
-		entriesFirst.add(Entry(2f, 2f))
-		entriesFirst.add(Entry(3f, 1f))
-		entriesFirst.add(Entry(4f, 0f))
-		entriesFirst.add(Entry(5f, 4f))
-		entriesFirst.add(Entry(6f, 1f))
-
-		val datasetFirst = LineDataSet(entriesFirst, "Ингавирин")
-		datasetFirst.color = Color.RED;
-		datasetFirst.setCircleColor(Color.BLACK)
-		datasetFirst.setMode(LineDataSet.Mode.CUBIC_BEZIER)
-
-
-		val entriesSecond: ArrayList<Entry> = ArrayList()
-		entriesSecond.add(Entry(0f, 0f))
-		entriesSecond.add(Entry(1f, 2f))
-		entriesSecond.add(Entry(2f, 1f))
-		entriesSecond.add(Entry(3f, 2f))
-		entriesSecond.add(Entry(4f, 0.5f))
-		entriesSecond.add(Entry(5f, 0f))
-
-
-		val datasetSecond = LineDataSet(entriesSecond, "Супрастин")
-		datasetSecond.setCircleColor(Color.BLACK)
-		datasetSecond.setMode(LineDataSet.Mode.CUBIC_BEZIER)
-
-
-		val dataSets: ArrayList<ILineDataSet> = ArrayList()
-		dataSets.add(datasetFirst)
-		dataSets.add(datasetSecond)
-
-
-		val data = LineData(dataSets)
-
-		chart.data = data
-
-		chart.animateY(500);
-
-		chart.invalidate()
-
-		//Normally
-
-/*		chart.clear()
-		val dataSet: ArrayList<ILineDataSet> = ArrayList()
-		for (id in DataBase.graphInfoID) {
-			val entriesFirst: ArrayList<Entry> = DataBase.getGraphLine(id)
-			val datasetFirst = LineDataSet(entriesFirst, "График")
-			dataSet.add(datasetFirst)
-		}
-		val getData = LineData(dataSet)
-		chart.data = getData
-		chart.invalidate()*/
-	}
-
-	private fun addNextDataOnGraph() {
-		val entriesFirst: ArrayList<Entry> = ArrayList()
-		entriesFirst.add(Entry(1f, 5f))
-		entriesFirst.add(Entry(2f, 2f))
-		entriesFirst.add(Entry(3f, 1f))
-		entriesFirst.add(Entry(4f, 0f))
-		entriesFirst.add(Entry(5f, 4f))
-		entriesFirst.add(Entry(6f, 1f))
-
-		val datasetFirst = LineDataSet(entriesFirst, "Ингавирин")
-		datasetFirst.color = Color.RED;
-		datasetFirst.setCircleColor(Color.BLACK)
-		datasetFirst.setMode(LineDataSet.Mode.CUBIC_BEZIER)
-
-
-		val entriesSecond: ArrayList<Entry> = ArrayList()
-		entriesSecond.add(Entry(0f, 0f))
-		entriesSecond.add(Entry(1f, 2f))
-		entriesSecond.add(Entry(2f, 1f))
-		entriesSecond.add(Entry(3f, 2f))
-		entriesSecond.add(Entry(4f, 0.5f))
-		entriesSecond.add(Entry(5f, 0f))
-
-
-		val datasetSecond = LineDataSet(entriesSecond, "Супрастин")
-		datasetSecond.setCircleColor(Color.BLACK)
-		datasetSecond.setMode(LineDataSet.Mode.CUBIC_BEZIER)
-
-		val entriesThird: ArrayList<Entry> = ArrayList()
-		entriesThird.add(Entry(1f, 1f))
-		entriesThird.add(Entry(2f, 2f))
-		entriesThird.add(Entry(3f, 2f))
-		entriesThird.add(Entry(4f, 3f))
-		entriesThird.add(Entry(5f, 4f))
-		entriesThird.add(Entry(6f, 6f))
-
-		val datasetThird = LineDataSet(entriesThird, "Нимесулид")
-		datasetThird.color = Color.MAGENTA;
-		datasetThird.setCircleColor(Color.BLACK)
-		datasetThird.setMode(LineDataSet.Mode.CUBIC_BEZIER)
-
-
-		val dataSets: ArrayList<ILineDataSet> = ArrayList()
-		dataSets.add(datasetFirst)
-		dataSets.add(datasetSecond)
-		dataSets.add(datasetThird)
-
-
-		val data = LineData(dataSets)
-
-		chart.data = data
-
-		chart.animateY(500);
-
-		chart.invalidate()
-	}
+    private fun addDataOnGraph() {
+        chart.clear()
+        val dataSet: ArrayList<ILineDataSet> = ArrayList()
+        val rnd = Random()
+        var maxY = 1f
+        var ind = 0
+        val colors = listOf(
+            Color.parseColor("#A167A5"),
+            Color.parseColor("#F3752B"),
+			Color.parseColor("#72B01D"),
+            Color.parseColor("#FFC800"),
+            Color.parseColor("#EF233C"),
+			Color.parseColor("#02C3BD"),
+        )
+        for (id in DataBase.getGraphInfoId()) {
+            val entries: ArrayList<Entry> = DataBase.getGraphLine(id)
+            for (entry in entries) {
+                maxY = max(maxY, entry.y)
+            }
+            val col: Int = if (ind < 5)
+                colors[ind]
+            else
+                Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+            ind++
+            val dataset = LineDataSet(entries, DataBase.getSubstanceFromId(id).name)
+            dataset.color = col
+            dataset.setDrawCircles(false)
+            dataSet.add(dataset)
+        }
+        maxY *= 1.5f
+        val getData = LineData(dataSet)
+        chart.data = getData
+        chart.setVisibleYRange(0f, maxY, null)
+        chart.animateY(50)
+        chart.invalidate()
+    }
 
 	override fun onDestroyView() {
 		super.onDestroyView()
