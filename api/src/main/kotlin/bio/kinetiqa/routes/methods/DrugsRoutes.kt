@@ -66,7 +66,7 @@ fun Route.drugsRouting() {
                             .orderBy(Intakes.timeWhen to SortOrder.ASC)
                             .map { row -> Intake.wrapRow(row) }.filter { intake ->
                                 intake.timeWhen.isAfter(
-                                    LocalDateTime.now().minusWeeks(1).toInstant(ZoneOffset.UTC)
+                                    LocalDateTime.now().minusWeeks(3).toInstant(ZoneOffset.UTC)
                                 )
                             }.toList()
                     }
