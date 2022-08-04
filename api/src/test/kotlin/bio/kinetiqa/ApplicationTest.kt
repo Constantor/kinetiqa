@@ -4,7 +4,7 @@ import io.ktor.server.routing.*
 import io.ktor.http.*
 
 //import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.serialization.kotlinx.json.*
+import io.ktor.serialization.kotlinx.kotlinx.json.*
 //import io.ktor.server.application.*
 //import kotlinx.serialization.json.Json
 
@@ -17,6 +17,7 @@ import io.ktor.client.statement.*
 import kotlin.test.*
 import io.ktor.server.testing.*
 import bio.kinetiqa.plugins.*
+import io.ktor.client.call.body
 import io.ktor.client.call.body
 import io.ktor.client.call.body
 
